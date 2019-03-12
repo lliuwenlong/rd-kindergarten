@@ -1,0 +1,114 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>营养膳食--制作周菜谱</h3>
+                <h5>制作周菜谱</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="form" method="post" action="/index.php?m=Admin&c=Shan&a=week_menu" enctype="multipart/form-data">
+        <div class="ncap-form-default">
+        	  <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>选择日期</label>
+                </dt>
+                <dd class="opt">
+                   <input type="date" name="eat_time">
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">选择日期</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>制作人</label>
+                </dt>
+                <dd class="opt">
+                   <input type="text" name="cooker">
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">制作人</p>
+                </dd>
+            </dl>
+                <foreach name="menu" item="val" key="key">
+                        
+            <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>
+                       <if condition="$key eq 1"> 早餐食谱
+                        <elseif condition="$key eq 2"/>
+                        早点食谱
+                        <elseif condition="$key eq 3"/>
+                        午餐食谱
+                        <elseif condition="$key eq 4"/>
+                        午点食谱
+                        <elseif condition="$key eq 5"/>
+                        晚餐食谱
+                    </if>
+                    </label>
+                </dt>
+                <dd class="opt" >
+                        <foreach name="val" item="v">
+                           <table border="1" style="width: 200px;height: 200px;display: inline-block;margin-right: 20px;">
+                               <tr>
+                                <td><input type="checkbox" name="menu_id[]" value="{$v.id}"></td>
+                                   <td>{$v.type_name}：</td>
+                                   <td>{$v.name}</td>
+                               </tr>
+                               <tr>
+                                   <td><img src="__PUBLIC__/img/{$v.img}" style="width: 100px; height: 100px;"></td>
+                                   <td>食材：{$v.food_cai}</td>
+                                   <td>营养成分：</td>
+                               </tr>
+                           </table>
+                           </foreach>
+                      
+                   
+                    <span class="err" id="err_user_name">
+                          <if condition="$key eq 1"> 早餐食谱
+                        <elseif condition="$key eq 2"/>
+                        早点食谱
+                        <elseif condition="$key eq 3"/>
+                        午餐食谱
+                        <elseif condition="$key eq 4"/>
+                        午点食谱
+                        <elseif condition="$key eq 5"/>
+                        晚餐食谱
+                    </if>
+                    </span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+            </foreach>
+                   
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+
+
+  $(document).on('click',".cai",function(){
+	  	var type = $(this).html();
+	  	
+	  	if(type=="＋"){
+	  		$(this).html("-")
+	  		var clone=$(this).parent().parent().clone()
+	  		$(this).parent().parent().after(clone)
+	  		$(this).html("＋")
+	  	}else{
+	  		$(this).parent().parent().remove()
+	  	}
+  })
+
+    function adsubmit(){
+        $("#form").submit();
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>考核管理--考核评分--添加考核评分标准</h3>
+                <h5>添加考核评分标准：添加每个职位的考核评分标准详情</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="form1" method="post" action="/index.php?m=Admin&c=Assess&a=fen_add">
+         <input type="hidden" name="status" id="status" value="{$status}">
+        <div class="ncap-form-default">
+
+            <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>评分标准编号</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="number"  id="user_name" maxlength="20" class="input-txt">
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">评分标准编号</p>
+                </dd>
+            </dl>
+            <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所属集团</label>
+                </dt>
+                <dd class="opt">
+                    <select  class="ji">
+                        <option value='0'>请选择...</option>
+                        <foreach name="ji" item="v">
+                            <option value="{$v.id}">{$v.name}</option>
+                        </foreach>
+                    </select>
+                </dd>
+            </dl>
+            
+            <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所属考核细项</label>
+                </dt>
+                <dd class="opt">
+                        <select name="type_id" id="type">
+                           <option value='0'>请选择...</option>
+                            <foreach name="type" item="v">
+                                <option value="{$v.id}">{$v.name}</option>
+                            </foreach>         
+                        </select>
+                </dd>
+            </dl>
+                <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所属职位</label>
+                </dt>
+                <dd class="opt">
+                        <select name="role_id" id="role">
+                           <option value='0'>请选择...</option>
+                            <foreach name="role" item="v">
+                                <option value="{$v.id}">{$v.name}</option>
+                            </foreach>         
+                        </select>
+                </dd>
+            </dl>
+             <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>加分标准</label>
+                </dt>
+                <dd class="opt">
+                        <textarea name="desc"></textarea>
+                </dd>
+            </dl>
+             <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>成长值奖励</label>
+                </dt>
+                <dd class="opt">
+                        <input type="text" name="fen">
+                </dd>
+            </dl>
+             <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>考核频次</label>
+                </dt>
+                <dd class="opt">
+                        <select name="kao_num" >
+                            <option value="次">次</option>
+                            <option value="天">天</option>
+                            <option value="周">周</option>
+                            <option value="月">月</option>
+                            <option value="学期">学期</option>                 
+                        </select>
+                </dd>
+            </dl>
+            
+         
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    $(document).on('change','.ji',function(){
+        var id = $(this).val();
+        var status = $("#status").val();
+        $.ajax({
+            url:"/index.php?m=Admin&c=Assess&a=getJiType",
+            data:{id:id,status:status},
+            dataType:'json',
+            success:function(res){
+               var str =` <option value='0'>请选择...</option>`
+                $.each(res,function(i,v){
+                   str +=` <option value='`+v.id+`'>`+v.name+`</option>`
+                })
+                $("#type").html(str)
+            }
+        })
+        $.ajax({
+            url:"/index.php?m=Admin&c=Assess&a=getRole",
+            data:{id:id},
+            dataType:'json',
+            success:function(res){
+                var str =` <option value='0'>请选择...</option>`
+                $.each(res,function(i,v){
+                    str +=` <option value='`+v.id+`'>`+v.name+`</option>`
+                })
+                $("#role").html(str)
+            }
+        })
+    })
+    function adsubmit(){
+        $("#form1").submit();
+    }
+</script>

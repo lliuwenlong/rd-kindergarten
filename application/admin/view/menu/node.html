@@ -1,0 +1,255 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>管理员 - 添加权限</h3>
+                <h5>网站系统添加权限</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="adminHandle" method="post">
+       <!--  <input type="hidden" name="act" id="act" value="{$act}">
+        <input type="hidden" name="menu_id" value="{$menu_id}"> -->
+        <!-- <input type="hidden" name="auth_code" value="{$Think.config.AUTH_CODE}"/> -->
+        <div class="ncap-form-default">
+            <!-- <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>权限名称</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="node_name" value="{$info.node_name}" id="user_name" maxlength="20" class="input-txt">
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">权限名称</p>
+                </dd>
+            </dl> -->
+         <!--    <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所属机构</label>
+                </dt>
+                <dd class="opt">
+                    <select name="category_id">
+                        <foreach name="list" item="val">
+                            <option value="{$val.category_id}">{$val.category_name}</option>
+                        </foreach>
+                        
+                    </select>
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">所属机构名称</p>
+                </dd>
+            </dl> -->
+             <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>选择机构</label>
+                </dt>
+                <dd class="opt">
+                        <select class="sell" name="ji[]">
+                           <option value='0'>请选择...</option>
+                            <foreach name="list" item="v">
+                            <option value="{$v.id}">{$v.name}</option>
+                             </foreach>
+                           
+                        </select>
+                   <!--  <span class="err" id="err_user_name"></span>
+                    <p class="notic">所属分类</p> -->
+                </dd>
+            </dl>
+              <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>选择人员</label>
+                </dt>
+                <dd class="opt">
+                        <button type="button" id="btn">确定机构人员</button>
+                       
+                   <!--  <span class="err" id="err_user_name"></span>
+                    <p class="notic">所属分类</p> -->
+                </dd>
+            </dl>
+            <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>应有权限</label>
+                </dt>
+                <dd class="opt">
+                        <h2>菜单等级：<span style="background-color:pink;">一级菜单</span><span style="background-color:skyblue;">二级菜单</span><span style="background-color:yellow;">三级菜单</span><span style="background-color:red;">四级菜单</span></h2>
+                        <table border="1" style="background-color:pink;">
+                            <foreach name="node" item="val">
+                                <tr>
+                                    <td><input type="checkbox" class="node" name="node[]" value='{$val.id}'>{$val.name}</td>
+                                    <foreach name="$val['son']" item="v">
+                                        <td style="background-color:skyblue;">
+                                            <span  >
+                                            <input type="checkbox" class="node" name="node[]" value="{$v.id}">{$v.name}
+                                            </span>
+                                            <table border="1" style="background-color:yellow;" >
+                                                <foreach name="$v['son']" item="vo">
+                                                <tr>
+                                                    <td><input class="node" type="checkbox" name="node[]" value="{$vo.id}">{$vo.name}</td>
+                                                    <td>
+                                                        <table border="1" style="background-color:red;">
+                                                            <foreach name="$vo['son']" item="vol">
+                                                                <tr>
+                                                                    <td><input class="node" type="checkbox" name="node[]" value="{$vol.id}">{$vol.name}</td>
+                                                                </tr>
+                                                            </foreach>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </foreach> 
+                                            </table>
+                                             
+                                             
+                                        </td>
+                                    </foreach>
+                                </tr>
+
+                            </foreach>
+                        </table>
+                       
+                   
+                        <!-- <select name="ren">
+                            <option value='0'>请选择...</option>
+                           
+                        </select> -->
+                   <!--  <span class="err" id="err_user_name"></span>
+                    <p class="notic">所属分类</p> -->
+                </dd>
+            </dl>
+            <!--<dl class="row">-->
+                <!--<dt class="tit">-->
+                    <!--<label for="user_name"><em>*</em>权限类型</label>-->
+                <!--</dt>-->
+                <!--<dd class="opt">-->
+                    <!--<input type="radio" name="node_type" value="0" checked>读-->
+                    <!--<input type="radio" name="node_type" value="1">写-->
+                    <!--<span class="err" id="err_user_name"></span>-->
+                    <!--<p class="notic">权限类型</p>-->
+                <!--</dd>-->
+            <!--</dl>-->
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    //复选框多选
+    $(document).on("click",".node",function(){
+        var _this = $(this)
+        var menu_id = _this.val();
+
+        $.ajax({
+            url:'/index.php?m=Admin&c=Menu&a=nodecheck',
+            data:{menu_id,menu_id},
+            dataType:'json',
+            success:function(res){
+                console.log(res)
+                $.each(res.data,function(i,v){
+                    $("input[value="+v+"]").prop("checked",true)
+                })
+            }
+        })
+        if(_this.prop("checked")==true){
+            _this.parent().parent().find("input").prop("checked",true)
+        }else{
+            _this.parent().parent().find("input").prop("checked",false)
+        }
+      
+    })
+    // 判断输入框是否为空
+    function adsubmit(){
+        $('.err').show();
+        if($("#user_name").val() == ""){
+            layer.msg('名称不能为空', {icon: 2,time: 1000});//alert('少年，密码不能为空！');
+            return false;
+        }
+        $.ajax({
+            async:false,
+            url:'/index.php?m=Admin&c=Menu&a=nodeadd&t='+Math.random(),
+            data:$('#adminHandle').serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(data){
+//                console.log(data);return false;
+                if(data.status != 1){
+                    layer.msg(data.msg,{icon: 2,time: 2000})
+                    $.each(data.result,function (index,item) {
+                        $('#err_'+index).text(item)
+                    })
+                }else{
+                    layer.msg(data.msg,{icon: 1,time: 1000},function () {
+                        window.location.href = data.url;
+                    })
+                }
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#error').html('<span class="error">网络失败，请刷新页面后重试!</span>');
+            }
+        });
+    }
+
+    $(document).on("click","#btn",function(){
+        $("#btn").next().remove();
+        var id='';
+        $(".sell :selected").each(function(){
+            id +=$(this).val()+",";
+        })
+        
+          $.ajax({
+            url:"/index.php?m=Admin&c=Menu&a=getuser",
+            data:{id:id},
+            dataType:'json',
+            success:function(res){
+                if(res.status==0){
+                    alert(res.msg)
+                }else{
+                    var str='<select name="ren"><option value="0">请选择...</option>';
+                    $.each(res.data,function(i,v){
+                       
+                        str+='<option value="'+v.admin_id+'">'+v.user_name+'</option>'
+                    })
+                  
+                    str+='</select>';
+                    $("#btn").after(str)
+                }
+            }
+        })
+    })
+
+
+
+        $(document).on('change','.sell',function(){
+         var id = $(this).val();
+      
+        if(id==0){
+            return false;
+        }
+        var obj =$(this);
+        $.ajax({
+            url:"/index.php?m=Admin&c=Organization&a=getji",
+            dataType:'json',
+            data:{id:id},
+            success:function(res){
+                 obj.nextAll().remove();
+                 if(res.state==0){
+                    return false;
+                 }
+                 var sel="<select class='sell' name='ji[]'><option value='0'>请选择...</option>";
+                     //json的循环
+                    $(res.data).each(function(key,val){
+                        //自增的id                     市或区的名称
+                        sel+="<option value='"+val.id+"'>"+val.name+"</option>";
+                    })
+                    sel+="</select>";
+                    //后面追加
+                    obj.after(sel);
+            }
+
+        })
+        //传值
+       
+        })   
+</script>
+</body>
+</html>

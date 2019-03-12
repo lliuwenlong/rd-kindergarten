@@ -1,0 +1,69 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>营养膳食--采购清单</h3>
+                <h5>采购食材物品</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="form" method="post" action="/index.php?m=Admin&c=Shan&a=go_buy" >
+        <div class="ncap-form-default">
+        	  <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>选择食材</label>
+                </dt>
+                <dd class="opt">
+                  <select name="cai_id">
+                    <foreach name="cai" item="val">
+                      <option value="{$val.id}">{$val.name}</option>
+                    </foreach>
+                    
+                  </select>
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">选择食材</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所需数量</label>
+                </dt>
+                <dd class="opt">
+                   <input type="text" name="weight">
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">所需数量</p>
+                </dd>
+            </dl>
+               
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+
+
+  $(document).on('click',".cai",function(){
+	  	var type = $(this).html();
+	  	
+	  	if(type=="＋"){
+	  		$(this).html("-")
+	  		var clone=$(this).parent().parent().clone()
+	  		$(this).parent().parent().after(clone)
+	  		$(this).html("＋")
+	  	}else{
+	  		$(this).parent().parent().remove()
+	  	}
+  })
+
+    function adsubmit(){
+        $("#form").submit();
+    }
+
+</script>
+</body>
+</html>

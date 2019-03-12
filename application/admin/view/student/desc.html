@@ -1,0 +1,237 @@
+<include file="public/layout" />
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>学生管理</h3>
+                <h5>网站系统管理员列表</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="ayou_div1">
+
+        <!--设置选项卡-->
+    </div>
+
+    <div class="flexigrid">
+        <div class="hDiv">
+
+            <div class="hDivBox">
+
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th class="sign" axis="col0">
+                            <div style="width: 24px;"><i class="ico-check"></i></div>
+                        </th>
+                        <th align="left" abbr="article_title" axis="col3" class="">
+                            <div style="text-align: left; width: 100px;" class="">学生姓名</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: left; width: 50px;" class="">性别</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">生日</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">家长名称</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">家长联系方式</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: left; width: 100px;" class="">所在集团</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: left; width: 100px;" class="">所在园区</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: left; width: 150px;" class="">所在班级</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">家庭住址</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">籍贯</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">曾在园所</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">招生老师</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">生活描述</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">爱好</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">健康状况</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">接送方式</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">其他备注</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">退园原因</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: left; width: 100px;" class="">入园经历</div>
+                        </th>
+                        <th align="center" axis="col1" class="handle">
+                            <div style="text-align: left; width: 150px;">特长</div>
+                        </th>
+                        <th align="center" axis="col1" class="handle">
+                            <div style="text-align: left; width: 50px;">收费情况</div>
+                        </th>
+                        <th colspan="2" align="center" axis="col1" class="handle">
+                            <div style="text-align: left; width: 600px;">操作</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                        <th align="center" axis="col1" class="handle">
+                            <div style="text-align: left; width: 150px;">学生状态</div>
+                        </th>
+
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="bDiv" style="height: auto;">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table>
+                    <tbody id="tbd">
+                        <tr>
+                            <td class="sign">
+                                <div style="width: 24px;"><i class="ico-check"></i></div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.student_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 50px;">
+                                    <if condition="$data.sex eq 0">
+                                        女
+                                        <else />
+                                        男
+                                    </if>
+
+                                </div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.birthday}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.family_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.tel}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.ji_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.garden_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 150px;">{$data.class_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.home}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.place}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.once_garden}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.zhaoteacher}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.life_desc}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.hobby}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.health_desc}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.jie_state}
+                                    <?php
+										if($data[jie_state] == 0){
+											echo '校车';
+										}else{
+											echo '自行接送';
+										}
+									?></div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.other_desc}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$data.backgarden}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">
+                                    <?php
+										if($data[go] == 0){
+											echo '没有';
+										}else{
+											echo '有';
+										}
+									?>
+                                </div>
+                            </td>
+
+
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 150px;">
+                                    {$data.te_name}
+                                </div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 150px;">
+                                    {$data.tuo + $data.can + $data.xiao + $data.qi}
+                                </div>
+                            </td>
+
+                            <td align="center" class="handle">
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 150px;">
+                                    <?php
+										if($data[status] == 0){
+											echo '毕业';
+										}else if($data[status] == 2){
+											echo '退园';
+										}else{
+											echo '在校';
+										}
+									?>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+        <!--分页位置-->
+        {$page} </div>
+</div>
+<script>
+</script>
+</body>
+</html>

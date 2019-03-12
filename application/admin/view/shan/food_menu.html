@@ -1,0 +1,166 @@
+<include file="public/layout" />
+<style type="text/css" media="screen">
+	
+</style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+	<div class="fixed-bar">
+		<div class="item-title">
+			<div class="subject">
+				<h3>营养膳食--食谱列表展示</h3>
+				<h5>食谱展示</h5>
+			</div>
+		</div>
+	</div>
+	<!-- 操作说明 -->
+	<div id="explanation" class="explanation" style="color: rgb(44, 188, 163); background-color: rgb(237, 251, 248); width: 99%; height: 100%;">
+		<div id="checkZoom" class="title"><i class="fa fa-lightbulb-o"></i>
+			<h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+			<span title="收起提示" id="explanationZoom" style="display: block;"></span>
+		</div>
+		<ul>
+			<li>营养膳食--食谱展示：展示菜品食谱</li>
+		</ul>
+	</div>
+	<div class="flexigrid">
+		<div class="mDiv">
+			<div class="ftitle">
+				<h3>食谱列表</h3>
+				<h5>(共{$list|count}条记录)</h5>
+			</div>
+			<div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
+			<!-- <form class="navbar-form form-inline" action="{:U('Shan/buy_list')}" method="get">
+				<div class="sDiv">
+					开始时间：
+					<div class="sDiv2">
+						
+						<input type="date" size="30" value="{$start}" name="start" class="qsbox" style="width: 150px">
+					</div>
+					结束时间：
+					<div class="sDiv2">
+						
+						
+						<input type="date" size="30" value="{$end}" name="end" class="qsbox" style="width: 150px">
+						<input type="submit" class="btn" value="搜索">
+					</div>
+				</div>
+			</form> -->
+		</div>
+		<div class="hDiv">
+			<div class="hDivBox">
+				<table cellspacing="0" cellpadding="0">
+					<thead>
+					<tr>
+						<th class="sign">
+							<div style="width: 24px;"><i class="ico-check"></i></div>
+						</th>
+						
+						<!-- <th align="left" abbr="ac_id" >
+							<div style="text-align: left; width: 100px;" class="">食谱ID</div>
+						</th> -->
+						<th align="left" abbr="ac_id" >
+							<div style="text-align: left; width: 100px;" class="">食谱名</div>
+						</th>
+						<th align="left" abbr="ac_id" >
+							<div style="text-align: left; width: 100px;" class="">食谱图片</div>
+						</th>
+						<th align="left" abbr="ac_id" >
+							<div style="text-align: left; width: 100px;" class="">操作</div>
+						</th>
+					</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+			<div class="tDiv">
+			<div class="tDiv2">
+				<div class="fbutton">
+					<a href="/index.php?m=Admin&c=Shan&a=qian_food_add"">
+						<div class="add" title="添加食谱">
+							<span><i class="fa fa-plus"></i>添加食谱</span>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div class="bDiv" style="height: auto;" >
+			<div id="flexigrid" cellpadding="0" cellspacing="0" border="0" style="width:100%;height: 600px;">
+				<table style="width: 500px;float: left;">
+					<tbody>
+					<foreach name="list" item="val">
+				<tr>
+					<td class="sign" style="width: 24px;">
+							<div style="width: 24px;"><i class="ico-check"></i></div>
+						</td>
+					<td style="width: 100px;">{$val.name}</td>
+					<td style="width: 100px;"><img src="__PUBLIC__/img/{$val.img}" alt="这是{$val.name},材料有{$val.cai}" style="width:50px;height: 50px;"></td>
+					<td style="width: 200px;">
+						<a href="javascript:void(0)" class="btn blue xq" class="btn" id="{$val.id}"><i class="fa fa-pencil-square-o"></i>查看详情</a>
+		                <a class="btn red"  href="/index.php?m=Admin&c=Shan&a=food_menu_del&id={$val.id}"><i class="fa fa-trash-o"></i>删除</a>
+						
+					</td>
+				</tr>
+			</foreach>
+			
+					</tbody>
+				</table>
+				<div id="main" style="width: 1000px;height: 1000px;float: right;text-align: center;"></div>
+	<!--分页位置-->
+		
+			</div>
+			<div  style="float: left;margin-top: -80px;">
+			　	<ul class="pager">
+					<li><a href="?index.php&m=Admin&c=Shan&a=food_menu&page={$uppage}">&laquo;上一页</a></li>
+					<li><a href="?index.php&m=Admin&c=Shan&a=food_menu&page={$nextpage}"><span>下一页&raquo;</span></a></li>
+				</ul>
+			</div>
+
+			<div class="iDiv" style="display: none;"></div>
+		</div>
+
+		<!-- {$page} --> </div>
+</div>
+<script>
+	$(document).on('click',".xq",function(){
+		var id = $(this).attr("id")
+		$.ajax({
+			url:"/index.php?m=Admin&c=Shan&a=getXQ",
+			data:{id:id},
+			dataType:'json',
+			success:function(res){
+				var str=`
+					<table class="table">
+								<tr>
+									<td>菜品ID</td>
+									<td>`+res.id+`</td>
+								</tr>
+								<tr>
+									<td>菜谱名</td>
+									<td>${res.name}</td>
+								</tr>
+								<tr>
+									<td>所需食材</td>
+									<td>${res.cai}</td>
+								</tr>
+								<tr>
+									<td>菜品图片</td>
+									<td><img src="__PUBLIC__/img/`+res.img+`" style="width:200px;height:200px;" alt=""></td>
+								</tr>
+								<tr>
+								<td>修改图片：</td>
+								<td><form action="/index.php?m=Admin&c=Shan&a=img_save" method="post" enctype="multipart/form-data"><input type="hidden" name="id" value="${res.id}"><input type="file" name="file"><input type="submit" value="修改"></form></td>
+								</tr>
+							</table>
+
+
+				`
+				$("#main").html(str)
+			}
+		})
+	})
+</script>
+</body>
+</html>

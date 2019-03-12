@@ -1,0 +1,217 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"></a>
+            <div class="subject">
+                <h3>特长课添加设置</h3>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="uploadForm" method="post" enctype="multipart/form-data">
+
+        <div class="ncap-form-default">
+            <div class="ncap-form-default">
+                <dl class="row">
+                    <dt class="tit">
+                        <label><em>*</em>集团名称</label>
+                    </dt>
+                    <dd class="opt">
+                        <select name="ji_id" class="j_01">
+                            <option value="" >请选择</option>
+                            <volist name="jituan" id="item">
+                                <option value="{$item.id}" >{$item.name}</option>
+                            </volist>
+                        </select>
+                        <span class="err" id="err_j_id"></span>
+                        <p class="notic">集团名称</p>
+                    </dd>
+                </dl>
+                <dl class="row">
+                    <dt class="tit">
+                        <label><em>*</em>园所名称/部门名称</label>
+                    </dt>
+                    <dd class="opt">
+                        <select name="garden_id" class="garden_01">
+                            <option value="" >请选择</option>
+                        </select>
+                        <span class="err" id="err_garden_id"></span>
+                        <p class="notic">园所名称/部门名称</p>
+                    </dd>
+                </dl>
+                <dl class="row">
+                    <dt class="tit">
+                        <label for="inform_title"><em>*</em>特长课名称</label>
+                    </dt>
+                    <dd class="opt">
+                        <input type="text" name="name" value="{$info.user_name}" id="inform_title" maxlength="20" class="input-txt">
+                        <span class="err" id="err_inform_title"></span>
+                    </dd>
+                </dl>
+                <dl class="row">
+                    <dt class="tit">
+                        <label for="inform_desc"><em>*</em>授课人</label>
+                    </dt>
+                    <dd class="opt">
+                        <input type="text" name="ren_name" maxlength="18" value="{$info.password}" id="inform_type" class="input-txt">
+                        <!--<input type="text" name="email" value="{$info.email}" id="email" class="input-txt" maxlength="40">-->
+                    </dd>
+
+                </dl>
+                <dl class="row">
+                    <dt class="tit">
+                        <label for="inform_type"><em>*</em>配课老师</label>
+                    </dt>
+                    <dd class="opt">
+                        <input type="text" name="ren_name2" maxlength="18" value="{$info.password}" id="inform_type" class="input-txt">
+
+                    </dd>
+
+                </dl>
+                <dl class="row">
+                    <dt class="tit">
+                        <label for="d_photo[]"><em>*</em>价格</label>
+                    </dt>
+                    <dd class="opt">
+                        <input type="text" name="money" maxlength="18" value="{$info.password}" id="d_photo[]" class="input-txt">
+                    </dd>
+
+                </dl>
+                <dl class="row">
+                    <dt class="tit">
+                        <label for="inform_type"><em>*</em>结算比例</label>
+                    </dt>
+                    <dd class="opt">
+                        <input type="text" name="bili" maxlength="18" value="{$info.password}" id="inform_type" class="input-txt">
+
+                    </dd>
+
+                </dl>
+                <dl class="row">
+                    <dt class="tit">
+                        <label for="inform_type"><em>*</em>月课时</label>
+                    </dt>
+                    <dd class="opt">
+                        <input type="text" name="class_num" maxlength="18" value="{$info.password}" id="class_num">
+                        <span id="tishi"></span>
+                    </dd>
+
+                </dl>
+
+                <dl class="row" id="desc">
+
+                </dl>
+
+                <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+            </div>
+    </form>
+</div>
+<scirpt src="__PUBLIC__/jquery.js"></scirpt>
+<script type="text/javascript">
+    $("#class_num").blur(function(){
+        _this =$(this)
+        var num = $(this).val();
+        // alert(num);return;
+        if(isNaN(num)){
+           $("#tishi").html("必须数字")
+            _this.focus();
+
+        }else{
+            $("#tishi").empty()
+            var str='';
+            for (i=1;i<=num;i++){
+                str+=`<dt class="tit">
+                        <label for="inform_type"><em>*</em>课时${i}:</label>
+                    </dt>
+                    <dd class="opt">
+                        开始时间：<input type="datetime-local" name="desc[]" maxlength="18">
+                        结束时间：<input type="datetime-local" name="desc[]" maxlength="18">
+
+                    </dd>`;
+            }
+            $("#desc").html(str)
+        }
+
+
+    })
+    $(document).on('change','.j_01',function () {
+        $(".class_01").html(' <option value="" >请选择</option>');
+        var j_id = $(this).val()
+        if(j_id == ''){
+            var tr = "<select name='garden_id' class='garden_01'><option value='' >请选择</option></select>";
+            $(".garden_01").html(tr)
+            var tr = "<select name='class_id' class='class_01'><option value='' >请选择</option></select>";
+            $(".class_01").html(tr)
+        }
+        $.ajax({
+            url:"/index.php/Admin/Staff/AjaxJ",
+            type:"post",
+            data:{j_id:j_id},
+            dataType:'json',
+            success:function (data) {
+                // console.log(data);return false;
+                var tr = "<select name='garden_id' class='garden_01'><option value='' >请选择</option>";
+                $.each(data,function (i,v) {
+                    tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                })
+                tr += "</select>";
+                $(".garden_01").html(tr);
+            }
+        })
+    })
+    $(document).on('change','.garden_01',function () {
+        var garden_id = $(this).val()
+        $.ajax({
+            url:"/index.php/Admin/Staff/AjaxGarden",
+            type:"post",
+            data:{garden_id:garden_id},
+            dataType:'json',
+            success:function (data) {
+                // console.log(data);
+                var tr = "<select name='class_id' class='class_01'><option value='' >请选择</option>";
+                $.each(data,function (i,v) {
+                    tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                })
+                tr += "</select>";
+                $(".class_01").html(tr);
+
+            }
+        })
+    })
+    // 判断输入框是否为空
+    function adsubmit(){
+        $('.err').show();
+        var formData = new FormData($('#uploadForm')[0]);
+        $.ajax({
+            async:false,
+            cache:false,
+            processData: false,//用于对data参数进行序列化处理 这里必须false
+            contentType: false, //必须
+            url:'/index.php?m=Admin&c=techang&a=add&t='+Math.random(),
+            data: formData,
+            type:'post',
+            dataType:'json',
+            success:function(data){
+//                console.log(data);return false;
+                if(data.status != 1){
+                    layer.msg(data.msg,{icon: 2,time: 2000})
+                    $.each(data.result,function (index,item) {
+                        $('#err_'+index).text(item)
+                    })
+                }else{
+                    layer.msg(data.msg,{icon: 1,time: 1000},function () {
+                        window.location.href = data.url;
+                    })
+                }
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#error').html('<span class="error">网络失败，请刷新页面后重试!</span>');
+            }
+        });
+    }
+</script>
+</body>
+</html>

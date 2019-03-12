@@ -1,0 +1,210 @@
+<include file="public/layout" />
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>薪酬级别</h3>
+                <!--<h5>网站系统管理员列表</h5>-->
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <!--<div id="explanation" class="explanation" style="color: rgb(44, 188, 163); background-color: rgb(237, 251, 248); width: 99%; height: 100%;">-->
+    <!--<div id="checkZoom" class="title"><i class="fa fa-lightbulb-o"></i>-->
+    <!--<h4 title="提示相关设置操作时应注意的要点">操作提示</h4>-->
+    <!--<span title="收起提示" id="explanationZoom" style="display: block;"></span>-->
+    <!--</div>-->
+    <!--<ul>-->
+    <!--&lt;!&ndash;<li>管理员列表管理, 可修改后台管理员登录密码和所属角色</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<button class="jia">+</button>&ndash;&gt;-->
+
+    <div class="flexigrid">
+        <!--<div class="tDiv2">-->
+            <!--<div class="fbutton">-->
+                <!--<a href="{:U('Staff/levels')}">-->
+                    <!--<div class="add" title="添加管理员">-->
+                        <!--<span><i class="fa fa-plus"></i>添加岗位级别</span>-->
+                    <!--</div>-->
+                <!--</a>-->
+                <!--<a href="{:U('Staff/levels_rank')}">-->
+                    <!--<div class="add" title="添加管理员">-->
+                        <!--<span><i class="fa fa-plus"></i>添加薪酬级别</span>-->
+                    <!--</div>-->
+                <!--</a>-->
+                <!--<a href="{:U('Staff/levels_standard')}">-->
+                    <!--<div class="add" title="添加管理员">-->
+                        <!--<span><i class="fa fa-plus"></i>添加档位级别</span>-->
+                    <!--</div>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="mDiv">-->
+            <!--<div class="ftitle">-->
+                <!--<h3>薪酬级别</h3>-->
+                <!--<h5>(共{$garden|count}条记录)</h5>-->
+            <!--</div>-->
+            <!--<div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>-->
+            <!--<form class="navbar-form form-inline" action="{:U('Admin/index')}" method="get">-->
+                <!--<div class="sDiv">-->
+                    <!--<div class="sDiv2">-->
+                        <!--<input type="text" size="30" name="keywords" class="qsbox" placeholder="搜索相关数据...">-->
+                        <!--<input type="submit" class="btn" value="搜索">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+        <!--<div class="hDiv">-->
+            <!--<div class="hDivBox">-->
+                <!--<table cellspacing="0" cellpadding="0">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th align="left" abbr="article_title" axis="col3" class="">-->
+                            <!--<div style="text-align: left; width: 200px;" class="">集团名称</div>-->
+                        <!--</th>-->
+                        <!--<th align="left" abbr="article_title" axis="col3" class="">-->
+                            <!--<div style="text-align: left; width: 200px;" class="">岗位级别</div>-->
+                        <!--</th>-->
+                        <!--<th align="left" abbr="article_title" axis="col3" class="">-->
+                            <!--<div style="text-align: left; width: 100px;" class="">薪酬级别</div>-->
+                        <!--</th>-->
+                        <!--<?php  foreach($data as $key => $val){  ?>-->
+                            <!--<?php if(count($val['standard']) == $count){ ?>-->
+                            <!--<?php  foreach($val["standard"] as $k => $v){  ?>-->
+                            <!--<th align="left" abbr="article_title" axis="col3" class="">-->
+                                <!--<div style="text-align: left; width: 50px;" class=""><?= $v[0] ?></div>-->
+                            <!--</th>-->
+                            <!--<?php } ?>-->
+                            <!--<?php } ?>-->
+                        <!--<?php } ?>-->
+                        <!--&lt;!&ndash;<th style="width:100%" axis="col7">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div></div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</th>&ndash;&gt;-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                <!--</table>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="tDiv">
+            <div class="tDiv2">
+                <div class="fbutton">
+                    <a href="{:U('Staff/levels')}">
+                        <div class="add" title="添加">
+                            <span><i class="fa fa-plus"></i>添加</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="bDiv" style="height: auto;">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table>
+                    <tr style="background-color:grey;">
+                        <td align="left" class="{$vo.role_id}">
+                            <div style="text-align: left; width: 50px;">集团名称</div>
+                        </td>
+                        <td align="left" class="{$vo.role_id}">
+                            <div style="text-align: left; width: 80px;">岗位级别</div>
+                        </td>
+                        <td align="left" class="{$vo.role_id}">
+                            <div style="text-align: left; width: 50px;">薪酬级别</div>
+                        </td>
+                        <?php  foreach($data as $key => $val){  ?>
+                        <?php if(count($val['standard']) == $count){ ?>
+                        <?php  foreach($val["standard"] as $k => $v){  ?>
+                        <td align="left" class="{$vo.role_id}">
+                            <div style="text-align: left; width: 20px;"><?= $v[0] ?></div>
+                        </td>
+                        <?php } ?>
+                        <?php } ?>
+                        <?php } ?>
+
+                        <!--<td align="left" class="">-->
+                        <!--<div style="text-align: left; width: 100px;"><a href="/index.php?m=Admin&c=Staff&a=JTmoneyXQ&id={$vo.id}"><button type="button">查看详情</button></a></div>-->
+                        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                        <!--<td align="" class="" style="width: 100%;">-->
+                        <!--<div>&nbsp;</div>-->
+                        <!--</td>-->
+                    </tr>
+                    <tbody>
+                    <foreach name="data" item="vo" key="k" >
+                        <tr>
+                            <td align="left">
+
+                                <div style="text-align: left; width: 50px;">{$vo.ji_name}</div>
+
+                            </td>
+                            <td align="left" class="{$vo.role_id}">
+                                <div style="text-align: left; width: 80px;">{$vo.name}</div>
+                            </td>
+                            <td align="left" class="{$vo.role_id}">
+                                <div style="text-align: left; width: 50px;">{$vo.jibie}</div>
+                            </td>
+                            <?php foreach($vo[standard] as $key => $val){ ?>
+                                <td align="left" class="{$vo.role_id}">
+                                    <div style="text-align: left; width: 20px;"><?= $val[1] ?></div>
+                                </td>
+                            <?php } ?>
+                            <!--<td align="left" class="">-->
+                                <!--<div style="text-align: left; width: 100px;"><a href="/index.php?m=Admin&c=Staff&a=JTmoneyXQ&id={$vo.id}"><button type="button">查看详情</button></a></div>-->
+                            <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                            <!--<td align="" class="" style="width: 100%;">-->
+                                <!--<div>&nbsp;</div>-->
+                            <!--</td>-->
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+        <!--分页位置-->
+        {$page} </div>
+</div>
+    <!--<table border="1" style="width: 1000px;">-->
+        <!--<th>集团名称</th>-->
+        <!--<th>岗位级别</th>-->
+        <!--<th>薪酬级别</th>-->
+        <!--<?php  foreach($data as $key => $val){  ?>-->
+            <!--<?php if(count($val['standard']) == $count){ ?>-->
+                <!--<?php  foreach($val["standard"] as $k => $v){  ?>-->
+                    <!--<th><?= $v[0] ?></th>-->
+                <!--<?php } ?>-->
+            <!--<?php } ?>-->
+        <!--<?php } ?>-->
+
+        <!--<foreach name="data" item="vo" key="k" >-->
+        <!--<tr>-->
+            <!--<td>{$vo.ji_name}</td>-->
+            <!--<td>{$vo.name}</td>-->
+            <!--<td>{$vo.jibie}</td>-->
+            <!--<?php foreach($vo[standard] as $key => $val){ ?>-->
+            <!--<td><?= $val[1] ?></td>-->
+            <!--<?php } ?>-->
+            <!--&lt;!&ndash;<td align="left" class="">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div style="text-align: left; width: 100px;"><a href="/index.php?m=Admin&c=Staff&a=JTmoneyXQ&id={$vo.id}"><button type="button">查看详情</button></a></div>&ndash;&gt;-->
+        <!--</tr>-->
+        <!--</foreach>-->
+    <!--</table>-->
+</body>
+<!--</html>-->
+<!--<script src="/public/jquery.js"></script>-->
+<script>
+    $(".jia").click(function () {
+        alert(555)
+    })
+
+    $(".jibie").click(function () {
+        alert(55)
+        // $(".rank_01").show();
+    })
+
+    // $(".jibie").blur(function () {
+    //     $(".rank_01").hide();
+    // })
+</script>

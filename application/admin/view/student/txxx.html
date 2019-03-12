@@ -1,0 +1,80 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>学生管理 -- 添加目标生源</h3>
+                <h5>网站系统管理员资料</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="form" method="post" action="/index.php?m=Admin&c=Student&a=tx_add">
+        <div class="ncap-form-default">
+            <input type="hidden" name="s_id" value="{$id}">
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>入园意向</label>
+                </dt>
+                <dd class="opt">
+                    <input type="radio" name="status" value="1" placeholder="强烈">强烈
+                    <input type="radio" name="status" value="2" placeholder="正常">正常
+                    <input type="radio" name="status" value="3" placeholder="放弃园所">放弃园所
+                    <span class="err" id="err_class_id"></span>
+                    <p class="notic">班级名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>备注</label>
+                </dt>
+                <dd class="opt">
+                    <textarea name="desc" id="" cols="30" rows="10"></textarea>
+                    <span class="err" id="err_class_id"></span>
+                    <p class="notic">班级名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>负责人</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="fuzeren">
+                    <span class="err" id="err_class_id"></span>
+                    <p class="notic">负责人</p>
+                </dd>
+            </dl>
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+
+    // $("#garden_id").change(function(){
+    //     var garden_id=$(this).val();
+    //     $.ajax({
+    //         url:"/index.php?m=Admin&c=Student&a=ClassHandle",
+    //         data:{garden_id:garden_id},
+    //         dataType:'json',
+    //         success:function(res){
+    //
+    //             var str=""
+    //             $.each(res,function(i,v){
+    //                 str +=' <option value="'+v.class_id+'">'+v.class_name+'</option> ';
+    //             })
+    //             $("#class_id").html(str)
+    //         }
+    //     })
+    //
+    // })
+
+    function adsubmit(){
+        $("#form").submit();
+    }
+
+</script>
+</body>
+</html>

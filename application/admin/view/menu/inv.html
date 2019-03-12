@@ -1,0 +1,285 @@
+<include file="public/layout" />
+<style type="text/css" media="screen">
+    .myStyle li span{
+        display: inline-block;
+        width: 49%;
+        color:red;
+    }
+    .myStyle b{
+        display: inline-block;
+        font-size:22px;
+        line-height:34px;
+        border-bottom: 1px solid #dcdcdc;
+    }
+    .myStyle .mySpan{
+        line-height: 28px;
+        border-bottom: 1px solid #dcdcdc;
+    }
+</style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>菜单管理</h3>
+                <h5>菜单列表</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div id="explanation" class="explanation" style="color: rgb(44, 188, 163); background-color: rgb(237, 251, 248); width: 99%; height: 100%;">
+        <div id="checkZoom" class="title"><i class="fa fa-lightbulb-o"></i>
+            <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+        </div>
+        <ul>
+            <li>菜单列表管理，添加前台菜单子菜单</li>
+        </ul>
+    </div>
+    <div class="flexigrid">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>菜单列表</h3>
+                <h5>(共{$list|count}条记录)</h5>
+            </div>
+            <div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
+            <!--<form class="navbar-form form-inline" action="{:U('Admin/index')}" method="get">-->
+                <!--<div class="sDiv">-->
+                    <!--<div class="sDiv2">-->
+                        <!--<input type="text" size="30" name="keywords" class="qsbox" placeholder="搜索相关数据...">-->
+                        <!--<input type="submit" class="btn" value="搜索">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</form>-->
+        </div>
+        <div class="hDiv">
+            <div class="hDivBox">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th class="sign" axis="col0">
+                            <div style="width: 24px;"><i class="ico-check"></i></div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: left; width: 500px;" class="">分类名称</div>
+                        </th>
+                        <th align="center" axis="col1" class="handle">
+                            <div style="text-align: center; width: 150px;">操作</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="tDiv">
+            <div class="tDiv2">
+                <div class="fbutton">
+                    <a href="{:U('Menu/admin_info')}">
+                        <div class="add" title="添加投资人">
+                            <span><i class="fa fa-plus"></i>添加主菜单</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        
+    <ul class="bDiv myStyle" style="height: auto;">
+                <!--一级菜单-->
+        <foreach name="list" item="val">
+            <li>
+                <b class="cl">+</b>
+                <span class="sign mySpan">{$val.name}</span>
+                <span class="mySpan">
+                     <a href="{:U('Menu/admin_info',array('id'=>$val['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加子菜单</a>
+                     <!-- <a href="{:U('Menu/node',array('menu_id'=>$val['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加权限</a> -->
+                    <a href="{:U('Menu/admin_info',array('id'=>$val['id'],'act'=>'update'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
+                    <a class="btn red"  href="javascript:void(0)" data-url="{:U('Admin/adminHandle')}" data-id="{$val.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
+                </span>
+                <foreach name="$val[son]" item="va">
+                    <ul style="display: none">
+                        <!--二级菜单-->
+                        <li>
+                            <b class="cl">+</b>
+                            <span class="sign mySpan">——>{$va.name}</span>
+                                <span class="sign mySpan">
+                                    <a href="{:U('Menu/admin_info',array('id'=>$va['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加子菜单</a>
+                                    <!-- <a href="{:U('Menu/node',array('menu_id'=>$va['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加权限</a> -->
+                                    <a href="{:U('Menu/admin_info',array('id'=>$va['id'],'act'=>'update'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
+                                    <a class="btn red"  href="javascript:void(0)" data-url="{:U('Admin/adminHandle')}" data-id="{$va.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
+                                </span>
+                            <foreach name="$va.son" item="v">
+                                <ul style="display: none">
+                                    <!--三家菜单-->
+                                    <li>
+                                        <b class="cl">+</b>
+                                        <span class="sign mySpan">——>——>{$v.name}</span>
+                                             <span class="sign mySpan">
+                                                <a href="{:U('Menu/admin_info',array('id'=>$v['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加子菜单</a>
+                                          <!--       <a href="{:U('Menu/node',array('menu_id'=>$v['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加权限</a> -->
+                                                <a href="{:U('Menu/admin_info',array('id'=>$v['id'],'act'=>'update'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
+                                                <a class="btn red"  href="javascript:void(0)" data-url="{:U('Admin/adminHandle')}" data-id="{$v.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
+                                            </span>
+                                        
+                                        <foreach name="$v.son" item="vo">   
+                                            <ul style="display: none">
+                                                <!--四级菜单-->
+                                                <li>
+                                                    <b class="cl">+</b>
+                                                    <span class="sign mySpan">——>——>——>{$vo.name}</span>
+                                                    <span class="sign mySpan">
+                                                        <a href="{:U('Menu/admin_info',array('id'=>$vo['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加子菜单</a>
+                                                       <!--  <a href="{:U('Menu/node',array('menu_id'=>$vo['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加权限</a> -->
+                                                        <a href="{:U('Menu/admin_info',array('id'=>$vo['id'],'act'=>'update'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
+                                                        <a class="btn red"  href="javascript:void(0)" data-url="{:U('Admin/adminHandle')}" data-id="{$vo.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
+                                                    </span>
+                                                    <foreach name="$vo.son" item="vol">   
+                                                        <ul style="display: none">
+                                                            <!--五级菜单-->
+                                                            <li>
+                                                                <b class="cl">+</b>
+                                                                <span class="sign mySpan">——>——>——>——>{$vol.name}</span>
+                                                                <span class="sign mySpan">
+                                                                    <a href="{:U('Menu/admin_info',array('id'=>$vol['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加子菜单</a>
+                                                                  <!--   <a href="{:U('Menu/node',array('menu_id'=>$vol['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加权限</a> -->
+                                                                    <a href="{:U('Menu/admin_info',array('id'=>$vol['id'],'act'=>'update'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
+                                                                    <a class="btn red"  href="javascript:void(0)" data-url="{:U('Admin/adminHandle')}" data-id="{$vol.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
+                                                                </span>
+                                                                 <foreach name="$vol.son" item="o">   
+                                                                    <ul style="display: none">
+                                                                        <!--六级菜单-->
+                                                                        <li>
+                                                                            <b class="cl">+</b>
+                                                                            <span class="sign mySpan">——>——>——>——>——>{$o.name}</span>
+                                                                            <span class="sign mySpan">
+                                                                                <a href="{:U('Menu/admin_info',array('id'=>$o['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加子菜单</a>
+                                                                              <!--   <a href="{:U('Menu/node',array('menu_id'=>$o['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加权限</a> -->
+                                                                                <a href="{:U('Menu/admin_info',array('id'=>$o['id'],'act'=>'update'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
+                                                                                <a class="btn red"  href="javascript:void(0)" data-url="{:U('Admin/adminHandle')}" data-id="{$o.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
+                                                                            </span>
+                                                                        
+
+                                                                        </li>
+                                                                    </ul>
+                                                                </foreach>
+                                                            
+
+                                                            </li>
+                                                        </ul>
+                                                    </foreach>
+                                                
+
+                                                </li>
+                                            </ul>
+                                        </foreach>
+                                    </li>
+                                </ul>
+                            </foreach>
+                        </li>
+                    </ul>
+                </foreach>
+                
+            </li> 
+        
+        </foreach> 
+    </ul>
+   
+
+
+
+
+
+      <!--   <div class="bDiv" style="height: auto;">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table>
+                    <tbody>
+                    <foreach name="list" item="vo" key="k" >
+                        <tr>
+                            <td class="sign">
+                                <div style="width: 24px;"><i class="ico-check"></i></div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 500px;">{$vo.name}</div>
+                            </td>
+                            <td align="center" class="handle">
+                                <div style="text-align: center; width: 170px; max-width:170px;">
+                                    <a href="{:U('Menu/admin_info',array('id'=>$vo['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加子菜单</a>
+                                    <a href="{:U('Menu/node',array('menu_id'=>$vo['id'],'act'=>'insert'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>添加权限</a>
+                                    <a href="{:U('Menu/admin_info',array('id'=>$vo['id'],'act'=>'update'))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
+                                    <if condition="$vo['id'] gt 0">
+                                        <a class="btn red"  href="javascript:void(0)" data-url="{:U('Admin/adminHandle')}" data-id="{$vo.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
+                                    </if>
+                                </div>
+                            </td>
+                            <td align="" class="" style="width: 100%;">
+                                <div>&nbsp;</div>
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div> -->
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+        <!--分页位置-->
+        {$page} </div>
+</div>
+<script>
+      $(document).on('click',".cl",function(){
+        $(this).parent().children("ul").toggle();
+
+        var type=$(this).text();
+        if(type=='+'){
+            //$(this).parent().children("ul").hide()
+            $(this).html("-")
+        }else{
+             //$(this).parent().children("ul").show()
+            $(this).html("+")
+        }
+    })
+    $(document).ready(function(){
+        // 表格行点击选中切换
+        $('#flexigrid > table>tbody >tr').click(function(){
+            $(this).toggleClass('trSelected');
+        });
+
+        // 点击刷新数据
+        $('.fa-refresh').click(function(){
+            location.href = location.href;
+        });
+
+    });
+
+
+    function delfun(obj) {
+        // 删除按钮
+        layer.confirm('确认删除？', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.ajax({
+                type: 'post',
+                url: '/index.php?m=Admin&c=Menu&a=del',
+                data : {act:'del',id:$(obj).attr('data-id')},
+                dataType: 'json',
+                success: function (data) {
+//                    console.log(data);return false;
+                    if (data.status == 1) {
+                        layer.msg(data.msg,{icon: 1,time: 1000},function () {
+                            $(obj).parent().parent().parent().remove();
+                        })
+                    } else {
+                        layer.confirm(data.msg,{icon: 2,time: 2000})
+                    }
+                }
+            })
+        }, function () {
+        });
+    }
+</script>
+</body>
+</html>

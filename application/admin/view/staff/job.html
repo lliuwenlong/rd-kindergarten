@@ -1,0 +1,428 @@
+<include file="public/layout" />
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+
+    /*设置中间鼠标点击事件*/
+
+    .ayou_div2 {
+
+        height: 46px;
+        position: relative;
+    }
+
+    li {
+        width: 129px;
+        height: 44px;
+        font-size: 16px;
+        text-align: center;
+        line-height: 44px;
+        float: left;
+        cursor: pointer;
+    }
+    /*设置显示li的样式*/
+    h3{
+        width: 120px;
+        float: left;
+        height: 44px;
+        line-height: 44px;
+        font-size: 16px;
+    }
+    .a_11 {
+        background: #9bc248;
+        color: #fff;
+        border-bottom: none;
+    }
+
+</style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>在职统计</h3>
+                <!--<h5>网站系统管理员列表</h5>-->
+            </div>
+        </div>
+    </div>
+    <!--&lt;!&ndash; 操作说明 &ndash;&gt;-->
+    <!--<div id="explanation" class="explanation" style="color: rgb(44, 188, 163); background-color: rgb(237, 251, 248); width: 99%; height: 100%;">-->
+    <!--<div id="checkZoom" class="title"><i class="fa fa-lightbulb-o"></i>-->
+    <!--<h4 title="提示相关设置操作时应注意的要点">操作提示</h4>-->
+    <!--<span title="收起提示" id="explanationZoom" style="display: block;"></span>-->
+    <!--</div>-->
+    <!--<ul>-->
+    <!--<li>管理员列表管理, 可修改后台管理员登录密码和所属角色</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <div class="ayou_div1">
+
+        <!--设置选项卡-->
+        <div class="ayou_div2">
+
+            <ul id="a_1">
+                <h3>所属集团：</h3>
+                <li class="a_11 cl" id="0" cat="ji_id">全部</li>
+                <foreach name="where['ji']" item="val">
+                    <li id="{$val.id}" cat="ji_id" class="cl">{$val.name}</li>
+                </foreach>
+
+            </ul>
+        </div>
+
+
+        <!--设置选项卡-->
+        <div class="ayou_div2">
+
+            <ul id="a_2">
+                <h3>所属园区/部门：</h3>
+                <span id="garden">
+					<li class="a_11 cl" id="0" cat="garden_id">全部</li>
+
+						<foreach name="where['garden']" item="val">
+							<li id="{$val.id}" cat="garden_id" class="cl">{$val.name}</li>
+						</foreach>
+					</span>
+            </ul>
+        </div>
+
+        <!--设置选项卡-->
+        <div class="ayou_div2">
+
+            <ul id="a_3">
+                <h3>所属班级：</h3>
+                <span id="class">
+					<li class="a_11 cl" id="0" cat="class_id">全部</li>
+
+						<foreach name="where['class']" item="val">
+						<li id="{$val.id}" cat="class_id" class="cl">{$val.name}</li>
+					</foreach>
+					</span>
+
+            </ul>
+        </div>
+
+    </div>
+
+
+    <div class="flexigrid">
+
+        <div class="hDiv">
+            <div class="hDivBox">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th class="sign" axis="col0">
+                            <div style="width: 24px;"><i class="ico-check"></i></div>
+                        </th>
+                        <th align="left" abbr="article_title" axis="col3" class="">
+                            <div style="text-align: left; width: 100px;" class="">员工编号</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: left; width: 100px;" class="">员工姓名</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: left; width: 100px;" class="">职位</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: left; width: 100px;" class="">所属集团</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: left; width: 100px;" class="">所在园区</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: left; width: 100px;" class="">状态</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: left; width: 100px;" class="">最后一次登录时间</div>
+                        </th>
+                        <th align="center" axis="col1" class="handle">
+                            <div style="text-align: center; width: 150px;">操作</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="bDiv" style="height: auto;">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table>
+                    <tbody id="tbd">
+                    <foreach name="list" item="vo" key="k" >
+                        <tr>
+                            <td class="sign">
+                                <div style="width: 24px;"><i class="ico-check"></i></div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$vo.staff_id}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$vo.staff_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$vo.post_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$vo.ji_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$vo.garden_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;"><?php if($vo['staff_status'] == 1){ echo '在职';}else{ echo '离职';}  ?></div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">{$vo.time}</div>
+                            </td>
+                            <td align="center" class="handle">
+                                <div style="text-align: center; width: 170px; max-width:170px;">
+                                    <a href="{:U('Staff/desc',array('id'=>$vo['staff_id']))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>详情</a>
+                                </div>
+                            </td>
+                            <td align="" class="" style="width: 100%;">
+                                <div>&nbsp;</div>
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+        <!--分页位置-->
+        {$page} </div>
+</div>
+<script>
+    $(document).on('click',".cl",function(){
+
+        $(this).addClass("a_11")
+        $(this).siblings().attr("class","cl")
+        var cat = $(this).attr("cat");
+        var id = $(this).attr("id");
+        if(id =='0'){
+            history.go(0)
+        }
+        var obj = $(".a_11");
+        // console.log(obj)
+        var arr=new Array();
+        $(obj).each(function(i,v){
+            var dat={
+                id:v.id,
+                type:$(this).attr("cat")
+            };
+            arr.push(dat)
+        })
+        console.log(arr);
+        // return;
+
+
+        if(cat=='ji_id'){
+            $("#class").html('<li class="a_11 cl" id="0" cat="class_id">全部</li>');
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getGarden",
+                data:{id:id,cat:cat},
+                dataType:'json',
+                success:function(res){
+                    // console.log(res)
+                    var st ='<li class="a_11 cl" cat="garden_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        st +=`<li id="${val.id}" cat="garden_id" class="cl">${val.name}</li>`
+                    })
+
+                    $("#garden").html(st)
+                }
+            })
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getRole",
+                data:{id:id,cat:cat},
+                dataType:'json',
+                success:function(res){
+                    // console.log(res)
+                    var st ='<li class="a_11 cl" cat="o_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        st +=`<li id="${val.id}" cat="o_id" class="cl">${val.name}</li>`
+                    })
+
+                    $("#ren").html(st)
+                }
+            })
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getJiType",
+                data:{id:id,status:status},
+                dataType:'json',
+                success:function(res){
+                    var str ='<li class="a_11 cl" cat="fen_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        str +=`<li id="${val.id}" cat="fen_id" class="cl">${val.name}</li>`
+                    })
+                    $("#fen").html(str)
+                }
+            })
+        }
+        if(cat=='garden_id'){
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getClass",
+                data:{id:id,cat:cat},
+                dataType:'json',
+                success:function(res){
+                    // console.log(res)
+                    var stt ='<li class="a_11 cl" cat="class_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        stt +=`<li id="${val.id}" cat="class_id" class="cl">${val.name}</li>`
+                    })
+
+                    $("#class").html(stt)
+                }
+            })
+        }
+
+        if(cat =='o_id'){
+            var tid = $(this).html()
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getFenType",
+                data:{tid:tid},
+                type:'post',
+                dataType:'json',
+                success:function(res){
+                    var sttt ='<li class="a_11 cl" cat="fen_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        sttt +=`<li id="${val.id}" cat="fen_id" class="cl">${val.name}</li>`
+                    })
+                    $("#fen").html(sttt)
+                }
+            })
+
+
+        }
+        $.ajax({
+            url:"/index.php?m=Admin&c=Staff&a=getjobData",
+            data:{"arr":arr},
+            type:'post',
+            dataType:'json',
+            success:function(res){
+                var str ='';
+                $.each(res,function(i,vo){
+                    str +=`
+                            <tr>
+                            <td class="sign">
+                                <div style="width: 24px;"><i class="ico-check"></i></div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">${vo.staff_id}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">${vo.staff_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">${vo.post_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">${vo.ji_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">${vo.garden_name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">`;
+                                   if(vo.staff_status==1){
+                                    str +='在职'
+                                }else{
+                                    str +='离职'
+                                }
+                               str +=`
+                                </div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">${vo.time}</div>
+                            </td>
+                            <td align="center" class="handle">
+                                <div style="text-align: center; width: 170px; max-width:170px;">
+                                    <a href="/index.php/admin/Staff/desc?id=${vo.staff_id}" class="btn blue"><i class="fa fa-pencil-square-o"></i>详情</a>
+                                </div>
+                            </td>
+                            <td align="" class="" style="width: 100%;">
+                                <div>&nbsp;</div>
+                            </td>
+                        </tr>
+                    `;
+                })
+
+                $("#tbd").html(str)
+            }
+
+        })
+    })
+    function zouni(myID) {
+        //设置选项一栏
+        var a_1 = document.getElementById(myID);
+        var a_1lis = a_1.getElementsByTagName('li');
+        //li div数量相等 下标一样 使用遍历
+        for(var i = 0; i < a_1lis.length; i++) {
+            //保存鼠标移入当前li的下标
+            a_1lis[i].index = i;
+            //鼠标点击
+            a_1lis[i].onclick = function() {
+                //去掉指定li样式影藏所有div
+                for(var j = 0; j < a_1lis.length; j++) {
+                    a_1lis[j].className = 'cl';
+                }
+                //显示当前li想其对应的div
+                a_1lis[this.index].className = 'a_11 cl';
+            }
+        }
+    };
+    zouni('a_1');
+    zouni('a_2');
+    // zouni('a_3');
+    // zouni('a_4');
+    // zouni('a_5');
+    $(document).ready(function(){
+        // 表格行点击选中切换
+        $('#flexigrid > table>tbody >tr').click(function(){
+            $(this).toggleClass('trSelected');
+        });
+
+        // 点击刷新数据
+        $('.fa-refresh').click(function(){
+            location.href = location.href;
+        });
+
+    });
+
+
+    function delfun(obj) {
+        // 删除按钮
+        layer.confirm('确认删除？', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.ajax({
+                type: 'post',
+                url: $(obj).attr('data-url'),
+                data : {act:'del',admin_id:$(obj).attr('data-admin_id'),id:$(obj).attr('data-id'),branch_id:$(obj).attr('data-branch_id')},
+                dataType: 'json',
+                success: function (data) {
+//                    console.log(data);return false;
+                    if (data.status == 1) {
+                        layer.msg(data.msg,{icon: 1,time: 1000},function () {
+                            $(obj).parent().parent().parent().remove();
+                        })
+                    } else {
+                        layer.msg(data.msg,{icon: 2,time: 2000})
+                    }
+                }
+            })
+        }, function () {
+        });
+    }
+</script>
+</body>
+</html>

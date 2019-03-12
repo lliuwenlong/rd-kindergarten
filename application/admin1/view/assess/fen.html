@@ -1,0 +1,389 @@
+<include file="public/layout" />
+<style>
+            * {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+            
+            .ayou_div1 {
+                
+                float: left;
+            }
+            /*设置中间鼠标点击事件*/
+            
+            .ayou_div2 {
+                
+                height: 46px;
+                position: relative;
+            }
+            
+            li {
+                width: 129px;
+                height: 44px;
+                font-size: 16px;
+                text-align: center;
+                line-height: 44px;
+                float: left;
+                cursor: pointer;
+            }
+            /*设置显示li的样式*/
+            h3{
+                width: 120px;
+                float: left;
+                height: 44px;
+                line-height: 44px;
+                font-size: 16px;
+            }
+            .a_11 {
+                background: #9bc248;
+                color: #fff;
+                border-bottom: none;
+            }
+
+        </style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>园所管理--考核管理--考核评分管理</h3>
+                <h5>考核评分管理</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div id="explanation" class="explanation" style="color: rgb(44, 188, 163); background-color: rgb(237, 251, 248); width: 99%; height: 100%;">
+        <div id="checkZoom" class="title"><i class="fa fa-lightbulb-o"></i>
+            <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+        </div>
+        <ul>
+            <li>园所管理--考核管理--考核评分管理：展示各个职位的考核评分指标</li>
+        </ul>
+    </div>
+    <div class="flexigrid">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>考核评分列表</h3>
+                <h5>(共{$list|count}条记录)</h5>
+            </div>
+            <div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
+       
+           <!--  <form class="navbar-form form-inline" action="{:U('Admin/index')}" method="get">
+                <div class="sDiv">
+                    <div class="sDiv2">
+                        <input type="text" size="30" name="keywords" class="qsbox" placeholder="搜索相关数据...">
+                        <input type="submit" class="btn" value="搜索">
+                    </div>
+                </div>
+            </form> -->
+        </div>
+             <div class="tDiv">
+            <div class="tDiv2">
+                <div class="fbutton">
+                    <a href="{:U('Assess/type_add',['id'=>1])}">
+                        <div class="add" title="前去采购">
+                            <span><i class="fa fa-plus"></i>添加评分标准分类</span>
+                        </div>
+                    </a>
+                    <a href="{:U('Assess/fen_add',['id'=>0])}">
+                        <div class="add" title="前去采购">
+                            <span><i class="fa fa-plus"></i>添加园长评分标准</span>
+                        </div>
+                    </a>
+                    <a href="{:U('Assess/fen_add',['id'=>1])}">
+                        <div class="add" title="前去采购">
+                            <span><i class="fa fa-plus"></i>添加员工评分标准</span>
+                        </div>
+                    </a>
+                   <!--   <a href="{:U('Assess/fen_type_add')}">
+                        <div class="add" title="前去采购">
+                            <span><i class="fa fa-plus"></i>添加评分分类</span>
+                        </div>
+                    </a> -->
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="ayou_div1">
+
+
+                <!--设置选项卡-->
+                <div class="ayou_div2">
+
+                    <ul id="a_1">
+                        <h3>所属集团：</h3>
+                        <li class="a_11 cl" id="0" cat="ji_id">全部</li>
+                        <foreach name="ji" item="val">
+                            <li id="{$val.id}" cat="ji_id" class="cl">{$val.name}</li>
+                        </foreach>
+
+                    </ul>
+                </div>
+
+            <!--<div class="ayou_div2">-->
+
+                <!--<ul id="a_2">-->
+                    <!--<h3>所属园区/部门：</h3>-->
+                    <!--<span id="garden">-->
+					<!--<li class="a_11 cl" id="0" cat="garden_id">全部</li>-->
+
+						<!--<foreach name="garden" item="val">-->
+							<!--<li id="{$val.id}" cat="garden_id" class="cl">{$val.name}</li>-->
+						<!--</foreach>-->
+					<!--</span>-->
+                <!--</ul>-->
+            <!--</div>-->
+
+            <!--设置选项卡-->
+            <div class="ayou_div2">
+
+                <ul id="a_3">
+                    <h3>评分对象：</h3>
+                    <span id="ren">
+                    <li class="a_11 cl" id="0" cat="role_id">全部</li>
+                    
+                        <foreach name="ren" item="val">
+                            <li id="{$val.id}" cat="role_id" class="cl">{$val.name}</li>
+                        </foreach>
+                    </span>
+                </ul>
+        </div>
+          <div class="ayou_div1">
+
+            <!--设置选项卡-->
+            <div class="ayou_div2">
+
+                <ul id="a_4">
+                    <h3>评分分类：</h3>
+                    <span id="fen">
+                    <li class="a_11 cl" id="0" cat="type_id">全部</li>
+                    
+                        <foreach name="type" item="val">
+                            <li id="{$val.id}" cat="type_id" class="cl">{$val.name}</li>
+                        </foreach>
+                    </span>
+                </ul>
+        </div>
+      <!--   <select name="role" class="role">
+            <option value="0">请选择</option>
+           
+            <foreach name="role" item="val">
+                 <option value="{$val.id}">{$val.name}</option>
+            </foreach>
+        </select> -->
+        <br>
+        <table border="1" style="background-color:yellow;text-align: center;">
+             
+                
+                    <tr style="background-color: skyblue;">
+                        <td>编号</td>
+                        <td style="width:200px;">加分标准</td>
+                        <td>成长值奖励值</td>
+                    </tr>
+                    <tbody id="tbd">
+                    <foreach name="list" item="val">
+                        <tr>
+                            <td>{$val.number}</td>
+                            <td>{$val.desc}</td>
+                            <td>{$val.fen}</td>
+                        </tr> 
+                    </foreach>
+                    
+                </tbody>
+        </table>
+        <div id="fen" style="width:500px;height: 500px;float: left">
+  
+
+
+        </div>
+        <div id="xq" style="width:500px;float: left">
+            
+        </div>
+
+        
+</div>
+</body>
+</html>
+<script>
+        function zouni(myID) {
+                //设置选项一栏
+                var a_1 = document.getElementById(myID);
+                var a_1lis = a_1.getElementsByTagName('li');
+                //li div数量相等 下标一样 使用遍历
+                for(var i = 0; i < a_1lis.length; i++) {
+                    //保存鼠标移入当前li的下标
+                    a_1lis[i].index = i;
+                    //鼠标点击
+                    a_1lis[i].onclick = function() {
+                        //去掉指定li样式影藏所有div
+                        for(var j = 0; j < a_1lis.length; j++) {
+                            a_1lis[j].className = 'cl';
+                        }
+                        //显示当前li想其对应的div        
+                        a_1lis[this.index].className = 'a_11 cl';
+                    }
+                }
+            };
+            zouni('a_1');
+            // zouni('a_2');
+            zouni('a_3');
+            zouni('a_4');
+
+    $(document).on('click','.cl',function(){
+        $(this).addClass("a_11")
+        $(this).siblings().attr("class","cl")
+        var cat = $(this).attr("cat");
+        var id = $(this).attr("id");
+        if(id =='0'){
+            history.go(0)
+        }
+        if(cat=='ji_id'){
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getRole",
+                data:{id:id,cat:cat},
+                dataType:'json',
+                success:function(res){
+                    // console.log(res)
+                    var st ='<li class="a_11 cl" cat="role_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        st +=`<li id="${val.id}" cat="role_id" class="cl">${val.name}</li>`
+                    })
+
+                    $("#ren").html(st)
+                }
+            })
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getJiType",
+                data:{id:id,status:status},
+                dataType:'json',
+                success:function(res){
+                    var str ='<li class="a_11 cl" cat="type_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        str +=`<li id="${val.id}" cat="type_id" class="cl">${val.name}</li>`
+                    })
+                    $("#fen").html(str)
+                }
+            })
+        }
+         if(cat=='role_id'){
+           var tid = $(this).html()
+                $.ajax({
+                    url:"/index.php?m=Admin&c=Assess&a=getFenType",
+                    data:{tid:tid},
+                    type:'post',  
+                    dataType:'json',
+                    success:function(res){
+                        var sttt ='<li class="a_11 cl" cat="type_id" id="0">全部</li>';
+                        $.each(res,function(i,val){
+                            sttt +=`<li id="${val.id}" cat="type_id" class="cl">${val.name}</li>`
+                        })
+                            $("#fen").html(sttt)
+                    }
+                })
+        }
+        var obj = $(".a_11");
+        // console.log(obj)
+        var arr=new Array();
+        $(obj).each(function(i,v){
+            var dat={
+                id:v.id,
+                type:$(this).attr("cat")
+            };
+            arr.push(dat)
+        })
+        console.log(arr)
+        // return;
+       
+        $.ajax({
+            url:"/index.php?m=Admin&c=Assess&a=getFenData",
+            data:{"arr":arr},
+            type:'post',  
+            dataType:'json',
+            success:function(res){
+               var str = ""
+                $.each(res,function(i,val){
+                    str +=`<tr>
+                            <td>${val.number}</td>
+                            <td>${val.desc}</td>
+                            <td>${val.fen}</td>
+                        </tr> `
+                })
+                $("#tbd").html(str)
+            }
+
+        })
+    })
+    $(document).on('change',".role",function(){
+        $("#fen").empty();
+        $("#xq").empty();
+        var role = $(this).val();
+        $.ajax({
+            url:'/index.php?m=Admin&c=Assess&a=getFen',
+            data:{role:role},
+            dataType:'json',
+            success:function(res){
+                var str=`<table border="1">
+                        <tr style="background-color: skyblue;">
+                            <th>考核分类</th>
+                            <th>操作</th>
+                        </tr>`;
+                 $.each(res.data,function(i,v){
+                    str+=`
+                        <tr>
+                            <td>`+v.name+`</td>
+                            <td><button type="button" class='btn' type_id="${v.type_id}" role_id="`+role+`">查看详情</button></td>
+                        </tr>
+                    `;
+                 })  
+
+
+                    
+
+                
+                str +=`</table>`;
+                $("#fen").html(str);
+            }
+        })
+    })
+    $(document).on('click',".btn",function(){
+        var type_id = $(this).attr("type_id");
+        var role_id = $(this).attr("role_id");
+        $.ajax({
+            url:'/index.php?m=Admin&c=Assess&a=getFenXQ',
+            data:{role_id:role_id,type_id:type_id},
+            dataType:'json',
+            success:function(res){
+                str=` <table border="1" style="background-color:yellow;display: inline-block;text-align: center;">
+                <thead>
+                    <tr>
+                        <th colspan="3">${res[0]['name']}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: skyblue;">
+                        <td>编号</td>
+                        <td style="width:200px;">加分标准</td>
+                        <td>成长值奖励值</td>
+                    </tr>
+                    `;
+                   
+           
+                $.each(res,function(i,v){
+                    str+=` <tr>
+                        <td>${v.number}</td>
+                        <td>${v.desc}</td>
+                        <td>${v.fen}</td>
+                    </tr>`;
+                })
+                str +=`</tbody></table>`;
+
+                $("#xq").html(str)
+            }
+        })
+    })
+</script>

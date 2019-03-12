@@ -1,0 +1,140 @@
+
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>管理员 - 添加机构</h3>
+                <h5>网站系统机构管理</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="form1" method="post" action="/index.php?m=Admin&c=Organization&a=update">
+        <input type="hidden" name="id" value="{$name['id']}">
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>机构名称</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="name" value="{$name['name']}" id="user_name" maxlength="20" class="input-txt">
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">机构名称</p>
+                </dd>
+            </dl>
+             <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所属地区</label>
+                </dt>
+                <dd class="opt" id="zhi">
+                     <foreach name="addr_id" item="val">
+                        <select class="addr" name="addr[]" >
+                           <option value='zhi'>请选择...</option>
+                            <foreach name="addr" item="v">
+                                <if condition="$v.ID eq $val">
+                                    <option value="{$v.ID}" selected>{$v.REGION_NAME}</option> 
+
+                                </if>
+                           
+                             </foreach>
+                           
+                        </select>
+                        </foreach>
+                   <!--  <span class="err" id="err_user_name"></span>
+                    <p class="notic">所属分类</p> -->
+                </dd>
+            </dl>
+           <!--  <dl class="row">
+                <dt class="tit">
+                    <label for="email"><em>*</em>所属投资人</label>
+                </dt>
+                <dd class="opt">
+                	<select name="name" id="ren">
+
+                		<option value="0">无投资人</option>
+						<foreach name="list" item="vo" key="k">
+						       <option value="{$vo.admin_id}">{$vo.user_name}</option>
+						</foreach>
+                	</select>
+                	<select name="yuan">
+
+                		
+						<foreach name="garden" item="vo" key="k">
+						       <option value="{$vo.garden_id}">{$vo.garden_name}</option>
+						</foreach>
+                	</select>
+                    <span class="err" id="err_email"></span><p class="notic">所属投资人</p>
+
+                </dd>
+
+            </dl> -->
+    
+         
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+   
+	 $(document).on('change','.addr',function(){
+        var id = $(this).val();
+        if(id=="zhi"){
+
+            $("#zhi").empty();
+        }
+        if(id==0){
+            return false;
+        }
+        var obj =$(this);
+        $.ajax({
+            url:"/index.php?m=Admin&c=Organization&a=getaddr",
+            dataType:'json',
+            data:{id:id},
+            success:function(res){
+                console.log(res)
+
+                 obj.nextAll().remove();
+                 if(res.state==0){
+                    return false;
+                 }
+                 var sel="<select class='addr' name='addr[]'><option value='0'>请选择...</option>";
+                     //json的循环
+                    $(res.data).each(function(key,val){
+                        //自增的id                     市或区的名称
+                        sel+="<option value='"+val.ID+"'>"+val.REGION_NAME+"</option>";
+                    })
+                    sel+="</select>";
+                    if(id=="zhi"){
+                    $("#zhi").html(sel)
+                    }else{
+                       //后面追加
+                    obj.after(sel); 
+                    }
+                    
+            }
+
+        })
+        //传值
+       
+        })
+	$(document).on('change',"#ren",function(){
+		var id = $(this).val();
+		$.ajax({
+			url:'/index.php?m=Admin&c=Organization&a=getgarden',
+			dataType:'json',
+			data:{id:id},
+			success:function(res){
+
+			}
+		})
+	})
+    function adsubmit(){
+        $("#form1").submit();
+    }
+</script>

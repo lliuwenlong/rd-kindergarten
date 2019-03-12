@@ -1,0 +1,333 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>学生管理 -- 添加目标生源</h3>
+                <h5>网站系统管理员资料</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="form" method="post" action="/index.php?m=Admin&c=Student&a=source_add">
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>学生名称</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="name" value="{$info.name}" id="user_name" maxlength="20" class="input-txt">
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">学生名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="email"><em>*</em>性别</label>
+                </dt>
+                <dd class="opt">
+                    <input type="radio" name="sex" value="1">男
+                   <input type="radio" name="sex" value="0">女
+                   
+                    <span class="err" id="err_email"></span><p class="notic">性别</p>
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>学生生日</label>
+                </dt>
+                <dd class="opt">
+                    <input type="date" name="birthday" maxlength="18" value="{$info.birthday}" id="password" class="input-txt">
+                    <span class="err" id="err_password"></span><p class="notic">学生生日</p>
+                </dd>
+
+            </dl>
+             <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>家长姓名</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="family_name" maxlength="18" value="{$info.family_name}" id="password" class="input-txt">
+                    <span class="err" id="err_password"></span><p class="notic">家长姓名</p>
+                </dd>
+
+            </dl>
+             <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>关系</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="relation" maxlength="18" value="{$info.relation}" id="password" class="input-txt">
+                    <span class="err" id="err_password"></span><p class="notic">关系</p>
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>籍贯</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="jiguan" maxlength="18" value="{$info.jiguan}" id="password" class="input-txt">
+                    <span class="err" id="err_password"></span><p class="notic">籍贯</p>
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>家庭住址</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="home" maxlength="18" value="{$info.home}" id="password" class="input-txt">
+                    <span class="err" id="err_password"></span><p class="notic">籍贯</p>
+                </dd>
+
+            </dl>
+             <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>家长所在单位</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="unit" maxlength="18" value="{$info.unit}" id="password" class="input-txt">
+                    <span class="err" id="err_password"></span><p class="notic">家长所在单位</p>
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>学历</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="xueli" maxlength="18" value="{$info.xueli}" id="password" class="input-txt">
+                    <span class="err" id="err_password"></span><p class="notic">学历</p>
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>家长微信</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="wechat" maxlength="18" value="{$info.wechat}" id="password" class="input-txt">
+                    <span class="err" id="err_password"></span><p class="notic">家长微信</p>
+                </dd>
+
+            </dl>
+
+             <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>家长电话</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="tel" maxlength="18" value="{$info.tel}" id="password" class="input-txt">
+                    <span class="err" id="err_password"></span><p class="notic">家长电话</p>
+                </dd>
+
+            </dl>
+
+             <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>入园经历</label>
+                </dt>
+                <dd class="opt">
+                  <input type="radio" name="go" value="1">有
+                  <input type="radio" name="go" value="0">无
+                    <span class="err" id="err_password"></span><p class="notic">入园经历</p>
+                </dd>
+
+            </dl>
+             <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>入园意向</label>
+                </dt>
+                <dd class="opt">
+                    <input type="radio" name="idea" value="1">强烈
+                  <input type="radio" name="idea" value="2">正常
+                  <input type="radio" name="idea" value="3">放弃园所
+                    <span class="err" id="err_password"></span><p class="notic">入园意向</p>
+                </dd>
+
+            </dl>
+             <dl class="row">
+                <dt class="tit">
+                    <label for="password"><em>*</em>信息来源</label>
+                </dt>
+                <dd class="opt">
+                    <select name="source_id">
+                        <foreach name="message_source" item="val">
+                           <option value="{$val.id}">{$val.name}</option> 
+                        </foreach>
+                        
+                    </select>
+                    <span class="err" id="err_password"></span><p class="notic">信息来源</p>
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>集团名称</label>
+                </dt>
+                <dd class="opt">
+                    <select name="ji_id" class="j_01">
+                        <option value="" >请选择</option>
+                        <volist name="jituan" id="item">
+                            <option value="{$item.id}" >{$item.name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_j_id"></span>
+                    <p class="notic">集团名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>园所名称/部门名称</label>
+                </dt>
+                <dd class="opt">
+                    <select name="garden_id" class="garden_01">
+                        <option value="" >请选择</option>
+                        <volist name="info" id="item">
+                            <option value="{$item.id}" >{$item.name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_garden_id"></span>
+                    <p class="notic">园所名称/部门名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>班级名称</label>
+                </dt>
+                <dd class="opt">
+                    <select name="class_id" class="class_01">
+                        <option value="" >请选择</option>
+                        <volist name="class" id="item">
+                            <option value="{$item.id}" >{$item.name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_class_id"></span>
+                    <p class="notic">班级名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>托费标准</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="tuo" placeholder="费用">
+                    <input type="text" name="tuo_zhou" placeholder="周期">
+                    <span class="err" id="err_class_id"></span>
+                    <p class="notic">班级名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>餐费标准</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="can" placeholder="费用">
+                    <input type="text" name="can_zhou" placeholder="周期">
+                    <span class="err" id="err_class_id"></span>
+                    <p class="notic">班级名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>校车标准</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="xiao" placeholder="费用">
+                    <input type="text" name="xiao_zhou" placeholder="周期">
+                    <span class="err" id="err_class_id"></span>
+                    <p class="notic">班级名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>其他收费</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="qi" placeholder="费用">
+                    <input type="text" name="qi_zhou" placeholder="周期">
+                    <span class="err" id="err_class_id"></span>
+                    <p class="notic">班级名称</p>
+                </dd>
+            </dl>
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).on('change','.j_01',function () {
+        var j_id = $(this).val()
+        if(j_id == ""){
+            var td = "<select name='position_id' class='post_01'><option value='' >请选择</option>";
+            td += "</select>";
+            $(".garden_01").html(td);
+            $(".class_01").html(td);
+            $(".post_01").html(td);
+        }
+        $.ajax({
+            url:"/index.php/Admin/Work/AjaxJ",
+            type:"post",
+            data:{j_id:j_id},
+            dataType:'json',
+            success:function (data) {
+                // console.log(data);return false;
+                var tr = "<select name='garden_id' class='garden_01'><option value='' >请选择</option>";
+                $.each(data,function (i,v) {
+                    tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                })
+                tr += "</select>";
+
+                $(".garden_01").html(tr);
+            }
+        })
+    })
+    $(document).on('change','.garden_01',function () {
+        var garden_id = $(this).val()
+        $.ajax({
+            url:"/index.php/Admin/Staff/AjaxGarden",
+            type:"post",
+            data:{garden_id:garden_id},
+            dataType:'json',
+            success:function (data) {
+                // console.log(data);
+                var tr = "<select name='class_id' class='class_01'><option value='' >请选择</option>";
+                $.each(data,function (i,v) {
+                    tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                })
+                tr += "</select>";
+                $(".class_01").html(tr);
+
+            }
+        })
+    })
+
+    // $("#garden_id").change(function(){
+    //     var garden_id=$(this).val();
+    //     $.ajax({
+    //         url:"/index.php?m=Admin&c=Student&a=ClassHandle",
+    //         data:{garden_id:garden_id},
+    //         dataType:'json',
+    //         success:function(res){
+    //
+    //             var str=""
+    //             $.each(res,function(i,v){
+    //                 str +=' <option value="'+v.class_id+'">'+v.class_name+'</option> ';
+    //             })
+    //             $("#class_id").html(str)
+    //         }
+    //     })
+    //
+    // })
+
+    function adsubmit(){
+        $("#form").submit();
+    }
+
+</script>
+</body>
+</html>

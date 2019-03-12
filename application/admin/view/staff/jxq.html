@@ -1,0 +1,107 @@
+<include file="public/layout" />
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>集团薪资级别详情</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="flexigrid">
+
+        <div class="tDiv">
+            <div style="clear:both"></div>
+        </div>
+        <div class="bDiv" style="height: auto;">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table style="width:200px;float: left">
+                    <tbody>
+                    <tr align="center">
+                        <th align="left">
+                            <div style="text-align: left; width: 200px;">岗位级别</div>
+                        </th>
+                        <th align="left">
+                            <div style="text-align: left; width: 200px;">所属薪资级别</div>
+                        </th>
+
+                        <th align="left">
+                            <div style="text-align: left; width: 200px;">操作</div>
+                        </th>
+                    </tr>
+                    <foreach name="data" item="vo" key="k" >
+                        <tr>
+                            <td align="left">
+                                <div style="text-align: left; width: 200px;">{$vo.role_name}</div>
+                            </td>
+                            <td align="left">
+                                <div style="text-align: left; width: 200px;">{$vo.pay_name}</div>
+                            </td>
+                            <td align="left">
+                                <div style="text-align: left; width: 200px;"><a class="btn red"  href="javascript:void(0)" data-url="{:U('Staff/JTmoneyXQdel',array('id'=>$vo[pay_id],'table'=>'pay_type'))}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a></div>
+                            </td>
+                        </tr>
+                    </foreach>
+
+                    </tbody>
+                    <table style="width:200px;float: right">
+                        <tbody>
+                        <tr align="center">
+                            <th align="left">
+                                <div style="text-align: left; width: 200px;">档位级别</div>
+                            </th>
+                            <th align="left">
+                                <div style="text-align: left; width: 200px;">操作</div>
+                            </th>
+                        </tr>
+                        <foreach name="list" item="vo" key="k" >
+                            <tr>
+                                <td align="left">
+                                    <div style="text-align: left; width: 200px;">{$vo.pay_name}</div>
+                                </td>
+
+                                <td align="left">
+                                    <div style="text-align: left; width: 200px;"><a class="btn red"  href="javascript:void(0)" data-url="{:U('Staff/JTmoneyXQdel',array('id'=>$vo[pay_id],'table'=>'pay_standard'))}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a></div>
+                                </td>
+                            </tr>
+                        </foreach>
+
+                        </tbody>
+                </table>
+            </div>
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+        <!--分页位置-->
+        {$page} </div>
+</div>
+
+</body>
+<script>
+    function delfun(obj) {
+        // 删除按钮
+        layer.confirm('确认删除？', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.ajax({
+                type: 'get',
+                url: $(obj).attr('data-url'),
+                data : {},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.msg,{icon: 1,time: 1000},function () {
+                            $(obj).parent().parent().parent().remove();
+                        })
+                    } else {
+                        layer.msg(data.msg,{icon: 2,time: 2000})
+                    }
+                }
+            })
+        }, function () {
+        });
+    }
+
+</script>

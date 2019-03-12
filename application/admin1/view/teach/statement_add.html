@@ -1,0 +1,84 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>考核管理--考核评分--添加考核评分标准</h3>
+                <h5>添加考核评分标准：添加每个职位的考核评分标准详情</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="form1" method="post" action="/index.php?m=Admin&c=Teach&a=statement_add">
+        <!-- <input type="hidden" name="id" value="{$id}"> -->
+        <div class="ncap-form-default">
+            <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所属集团</label>
+                </dt>
+                <dd class="opt">
+                    <select name="ji_id" >
+                        <option value='0'>请选择...</option>
+                        <foreach name="ji" item="v">
+                            <option value="{$v.id}">{$v.name}</option>
+                        </foreach>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所属项目</label>
+                </dt>
+                <dd class="opt">
+                        <select name="p_id" class="pid">
+                           <option value='0'>主分支</option>
+                            <foreach name="type" item="v">
+                                <option value="{$v.id}">{$v.name}</option>
+                            </foreach>         
+                        </select>
+                </dd>
+            </dl>
+             <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>评分项目名</label>
+                </dt>
+                <dd class="opt">
+                        <input type="text" name="name">
+                </dd>
+            </dl>
+             <dl class="row fen" style="display: none;">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>基础分值</label>
+                </dt>
+                <dd class="opt">
+                        <input type="text" name="fen">
+                </dd>
+            </dl>
+            
+            
+         
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    $(document).on('change','.pid',function(){
+        var id =$(this).val();
+        if(id !=0){
+            $(".row").show();
+        }else{
+            $(".fen").hide();
+        }
+
+
+
+    })
+    function adsubmit(){
+        $("#form1").submit();
+    }
+</script>

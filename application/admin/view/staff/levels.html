@@ -1,0 +1,147 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>添加班级</h3>
+                <!--<h5>网站系统管理员资料</h5>-->
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="adminHandle" method="post">
+        <input type="hidden" name="act" id="act" value="{$act}">
+        <input type="hidden" name="admin_id" value="{$info.admin_id}">
+        <input type="hidden" name="auth_code" value="{$Think.config.AUTH_CODE}"/>
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>集团名称</label>
+                </dt>
+                <dd class="opt">
+                    <select name="ji_id" class="j_01">
+                        <option value="" >请选择</option>
+                        <volist name="jituan" id="item">
+                            <option value="{$item.id}" >{$item.name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_j_id"></span>
+                    <p class="notic">集团名称</p>
+                </dd>
+            </dl>
+            <dl class="row" >
+                <dt class="tit">
+                    <label for="post_id"><em>*</em>岗位级别</label>
+                </dt>
+                <dd class="opt arrr" style="width:200px;" id="arrrr">
+                    <?php foreach($post as $key => $val){  ?>
+                        <input type="checkbox" name="role_id[]" value="<?php echo $val['id']; ?>" id="post_id" maxlength="20" class="input-txt">
+                        <?php echo $val['name']; ?>
+                    <?php  } ?>
+                    <!--<p class="notic">岗位级别</p>-->
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="principal"><em>*</em>级别</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="jibie" value="" id="principal" maxlength="20" class="input-txt">
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">级别</p>
+                </dd>
+            </dl>
+            <div id="con">
+
+
+            <dl class="row aqq">
+                <dt class="tit">
+                    <label for="principal" class="dang">1档 <input type="hidden" name="dang[]" value="1档"></label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="dangzhi[]" value="" id="principal" maxlength="20" class="input-txt"><button class="jia" type="button">+</button>
+                </dd>
+            </dl>
+            </div>
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    var i=2;
+    $(document).on('click',".jia",function () {
+
+
+        // alert($(this).html())
+        if($(this).html()=='+'){
+            event.preventDefault();
+            $(this).html("-")
+            $(this).parent().prev().html('<label for="principal" class="dang">'+i+'档<input type="hidden" name="dang[]" value="'+i+'档"></label>')
+            var add = $(this).parent().parent().clone();
+            $("#con").append(add);
+            $(this).html("+")
+            $(this).parent().prev().html('<label for="principal" class="dang">1档<input type="hidden" name="dang[]" value="1档"></label>')
+            i++;
+        }else{
+       // alert(22)
+            $(this).parent().parent().remove();
+            i =2
+
+        }
+
+    })
+    $(document).on("change",".j_01",function () {
+        $("#arrrr").empty();
+        var ji_id  = $(this).val();
+        // alert(ji_id);return false;
+        $.ajax({
+            url:"/index.php/Admin/Assess/getRole",
+            data:{id:ji_id},
+            dataType:"json",
+            type:"get",
+            success:function (data) {
+                var tr = "";
+                $.each(data,function (i,v) {
+                    tr +=`<input type="checkbox" name="role_id[]" value="${v.id}" id="post_id" maxlength="20" class="input-txt">${v.name}`;
+                })
+                console.log(tr);
+
+                $("#arrrr").html(tr);
+            }
+        })
+    })
+    // 判断输入框是否为空
+    function adsubmit(){
+        $('.err').show();
+        // alert($(".dang").text())
+        // return false;
+        $.ajax({
+            async:false,
+            url:'/index.php?m=Admin&c=Staff&a=levelsHandle&t='+Math.random(),
+            data:$('#adminHandle').serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(data){
+               // console.log(data);return false;
+                if(data.status != 1){
+                    layer.msg(data.msg,{icon: 2,time: 2000})
+                    $.each(data.result,function (index,item) {
+                        $('#err_'+index).text(item)
+                    })
+                }else{
+                    layer.msg(data.msg,{icon: 1,time: 1000},function () {
+                        window.location.href = data.url;
+                    })
+                }
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#error').html('<span class="error">网络失败，请刷新页面后重试!</span>');
+            }
+        });
+    }
+</script>
+</body>
+</html>

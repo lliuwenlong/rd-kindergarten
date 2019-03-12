@@ -1,0 +1,296 @@
+<include file="public/layout" />
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+	<div class="fixed-bar">
+		<div class="item-title">
+			<div class="subject">
+				<h3>营养膳食--营养标准</h3>
+				<h5>营养标准</h5>
+			</div>
+		</div>
+	</div>
+	<!-- 操作说明 -->
+	<div id="explanation" class="explanation" style="color: rgb(44, 188, 163); background-color: rgb(237, 251, 248); width: 99%; height: 100%;">
+		<div id="checkZoom" class="title"><i class="fa fa-lightbulb-o"></i>
+			<h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+			<span title="收起提示" id="explanationZoom" style="display: block;"></span>
+		</div>
+		<ul>
+			<li>营养膳食--营养标准：规定营养标准 展示每周营养成分</li>
+		</ul>
+	</div>
+	<div class="flexigrid">
+		<div class="mDiv">
+			<div class="ftitle">
+				<h3>营养成分标准</h3>
+				<h5>(共{$list|count}条记录)</h5>
+			</div>
+			<div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
+			<!-- <form class="navbar-form form-inline" action="{:U('Shan/buy_list')}" method="get">
+				<div class="sDiv">
+					开始时间：
+					<div class="sDiv2">
+						
+						<input type="date" size="30" value="{$start}" name="start" class="qsbox" style="width: 150px">
+					</div>
+					结束时间：
+					<div class="sDiv2">
+						
+						
+						<input type="date" size="30" value="{$end}" name="end" class="qsbox" style="width: 150px">
+						<input type="submit" class="btn" value="搜索">
+					</div>
+				</div>
+			</form> -->
+		</div>
+		<div class="hDiv">
+			<div class="hDivBox">
+				<table cellspacing="0" cellpadding="0">
+					<thead>
+					<tr>
+						<th class="sign" axis="col0">
+							<div style="width: 24px;"><i class="ico-check"></i></div>
+						</th>
+						<th align="left" abbr="article_title" axis="col3" class="">
+							<div style="text-align: left; width: 100px;" class="">   </div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">能量</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">蛋白质</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">脂肪</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">碳水化合物</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">膳食纤维</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">维生素A</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">维生素B1</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">维生素B2</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">尼克酸</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">维生素C</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">维生素E</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">钙</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">磷</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">钾</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">纳</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">镁</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">铁</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">锌</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">硒</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">铜</div>
+						</th>
+						<th align="left" abbr="ac_id" axis="col4" class="">
+							<div style="text-align: left; width: 100px;" class="">钼</div>
+						</th>
+						<th style="width:100%" axis="col7">
+							<div></div>
+						</th>
+					</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div class="tDiv">
+			<div class="tDiv2">
+				<div class="fbutton">
+				<!-- 	<a href="{:U('Shan/ying_biao_she')}">
+						<div class="add" title="前去采购">
+							<span><i class="fa fa-plus"></i>设置营养标准</span>
+						</div>
+					</a> -->
+				</div>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div class="bDiv" style="height: auto;">
+			<div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+				<table>
+					<tbody>
+					<foreach name="list" item="vo" key="k" >
+						<tr id="{$vo.id}">
+							<td class="sign">
+								<div style="width: 24px;"><i class="ico-check"></i></div>
+							</td>
+							<td align="left" >
+								<div style="text-align: left; width: 100px;">{$vo.name}</div>
+							</td>
+							<td align="left" class="cl" state="0" type="nl" >
+								<div style="text-align: left; width: 100px;">{$vo.nl}</div>
+							</td>
+							<td align="left" class="cl" state="0" type="dbz">
+								<div style="text-align: left; width: 100px;">{$vo.dbz}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="zf">
+								<div style="text-align: left; width: 100px;">{$vo.zf}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="tan">
+								<div style="text-align: left; width: 100px;">{$vo.tan}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="xian">
+								<div style="text-align: left; width: 100px;">{$vo.xian}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="weia">
+								<div style="text-align: left; width: 100px;">{$vo.weia}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="weib1">
+								<div style="text-align: left; width: 100px;">{$vo.weib1}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="weib2">
+								<div style="text-align: left; width: 100px;">{$vo.weib2}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="ni">
+								<div style="text-align: left; width: 100px;">{$vo.ni}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="weic">
+								<div style="text-align: left; width: 100px;">{$vo.weic}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="weie">
+								<div style="text-align: left; width: 100px;">{$vo.weie}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="gai">
+								<div style="text-align: left; width: 100px;">{$vo.gai}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="lin">
+								<div style="text-align: left; width: 100px;">{$vo.lin}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="jia">
+								<div style="text-align: left; width: 100px;">{$vo.jia}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="na">
+								<div style="text-align: left; width: 100px;">{$vo.na}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="mei">
+								<div style="text-align: left; width: 100px;">{$vo.mei}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="tei">
+								<div style="text-align: left; width: 100px;">{$vo.tei}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="xin">
+								<div style="text-align: left; width: 100px;">{$vo.xin}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="xi">
+								<div style="text-align: left; width: 100px;">{$vo.xi}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="tong">
+								<div style="text-align: left; width: 100px;">{$vo.tong}</div>
+							</td>
+							<td align="left" class="cl" state="0"  type="bo">
+								<div style="text-align: left; width: 100px;">{$vo.bo}</div>
+							</td>
+							
+							
+						</tr>
+					</foreach>
+					</tbody>
+				</table>
+			</div>
+			<div class="iDiv" style="display: none;"></div>
+		</div>
+		<!--分页位置-->
+		{$page} </div>
+</div>
+<script>
+
+	// 显示文本框并显示原值
+	$(document).on("click", ".cl", function () {
+		var _this = $(this);
+		var name = _this.attr("type")
+		var old_val = _this.children().html(); // 获取要修改的值
+		_this.html("<input type='text' style='width: 100px;' name=" + name + " class='focus' value=" + old_val + " />"); // 显示文本框
+		$(".focus").focus(); // 存在瑕疵，光标无法聚焦到文本最后的位置
+		$(":text").select(); // 改进，弥补瑕疵，全选文字
+	})
+	$(document).on("blur", ".focus", function () {
+		var _this = $(this);
+		var val=_this.val();
+		var id=_this.parent().parent().attr("id");
+		var name=_this.attr("name");
+		$.ajax({
+			url:'/index.php?m=Admin&c=Shan&a=ying_biao',
+			data:{val:val,id:id,name:name},
+			dataType:'json',
+			success:function(res){
+
+				
+			}
+		})
+		_this.parent().html('<div style="text-align: left; width: 100px;">'+val+'</div>');
+	
+	})
+	$(document).ready(function(){
+		// 表格行点击选中切换
+		$('#flexigrid > table>tbody >tr').click(function(){
+			$(this).toggleClass('trSelected');
+		});
+
+		// 点击刷新数据
+		$('.fa-refresh').click(function(){
+			location.href = location.href;
+		});
+
+	});
+
+
+	function delfun(obj) {
+		// 删除按钮
+		layer.confirm('确认删除？', {
+			btn: ['确定', '取消'] //按钮
+		}, function () {
+			$.ajax({
+				type: 'post',
+				url: $(obj).attr('data-url'),
+				data : {act:'del',admin_id:$(obj).attr('data-id')},
+				dataType: 'json',
+				success: function (data) {
+					if (data.status == 1) {
+						layer.msg(data.msg,{icon: 1,time: 1000},function () {
+							$(obj).parent().parent().parent().remove();
+						})
+					} else {
+						layer.msg(data.msg,{icon: 2,time: 2000})
+					}
+				}
+			})
+		}, function () {
+		});
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>				
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>学校管理</title>
+  <link rel="stylesheet" href="__ADMIN__/common/frame/layui/css/layui.css">
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+</head>
+<body>
+ 
+<div class="layui-fluid" >
+<form method="post" action="{:url('Admin/Shan/two')}" class="form-signin" enctype="multipart/form-data" >
+	<select name="menu_type">
+			<foreach name="type" item="val">
+				<option value="{$val.id}">{$val.name}</option>
+			</foreach>
+			
+		</select>
+    <input name="excel" type="file" class="form-control">
+    <button class="btn btn-lg btn-primary btn-block">导入</button>
+</form>
+</div>
+<script src="__ADMIN__/common/frame/layui/layui.js"></script>
+<script>
+layui.use(['laypage', 'table', 'element', 'layer', 'jquery','form'], function () {
+var table = layui.table;
+layer = layui.layer;
+laypage = layui.laypage;
+element = layui.element;
+form = layui.form;
+$=layui.$;
+  
+ 
+});
+</script>
+</body>
+</html>

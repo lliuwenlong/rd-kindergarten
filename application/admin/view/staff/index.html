@@ -1,0 +1,421 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>人事管理 - 添加新员工</h3>
+                <!--<h5>网站系统管理员资料</h5>-->
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="adminHandle" method="post">
+        <input type="hidden" name="act" id="act" value="{$act}">
+        <input type="hidden" name="admin_id" value="{$info.admin_id}">
+        <input type="hidden" name="auth_code" value="{$Think.config.AUTH_CODE}"/>
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label for="staff_name"><em>*</em>姓名</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="staff_name" value="{$info.user_name}" id="staff_name" maxlength="20" class="input-txt">
+                    <span class="err" id="err_staff_name"></span>
+                    <p class="notic">姓名</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="staff_date"><em>*</em>出生日期</label>
+                </dt>
+                <dd class="opt">
+                    <input type="date" name="staff_date" value="{$info.email}" id="staff_date" class="input-txt" maxlength="40">
+                    <span class="err" id="err_staff_date"></span><p class="notic">出生日期</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="staff_sex"><em>*</em>性别</label>
+                </dt>
+                <dd class="opt">
+                    <input type="radio" name="staff_sex" value="1" id="staff_sex" class="input-txt" maxlength="40">男
+                    <input type="radio" name="staff_sex" value="0" id="staff_sex" class="input-txt" maxlength="40">女
+                    <span class="err" id="err_staff_sex"></span><p class="notic">性别</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="staff_tel"><em>*</em>手机号</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="staff_tel" value="{$info.email}" id="staff_tel" class="input-txt" maxlength="40">
+                    <span class="err" id="err_staff_tel"></span><p class="notic">手机号</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="staff_address"><em>*</em>家庭住址</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="staff_address" value="{$info.email}" id="staff_address" class="input-txt" maxlength="40">
+                    <span class="err" id="err_staff_address"></span><p class="notic">家庭住址</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="staff_education"><em>*</em>学历</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="staff_education" value="{$info.email}" id="staff_education" class="input-txt" maxlength="40">
+                    <span class="err" id="err_staff_education"></span><p class="notic">学历</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="education_status"><em>*</em>是否统招</label>
+                </dt>
+                <dd class="opt">
+                    <input type="radio" name="education_status" value="1" id="education_status" class="input-txt" maxlength="40">是
+                    <input type="radio" name="education_status" value="0" id="education_status" class="input-txt" maxlength="40">否
+                    <span class="err" id="err_education_status"></span><p class="notic">性别</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="teaching_status"><em>*</em>教证</label>
+                </dt>
+                <dd class="opt">
+                    <input type="radio" name="teaching_status" value="1" id="teaching_status" class="input-txt" maxlength="40">是
+                    <input type="radio" name="teaching_status" value="0" id="teaching_status" class="input-txt" maxlength="40">否
+                    <span class="err" id="err_teaching_status"></span><p class="notic">教证</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="entry_date"><em>*</em>入职日期</label>
+                </dt>
+                <dd class="opt">
+                    <input type="date" name="entry_date" value="{$info.email}" id="entry_date" class="input-txt" maxlength="40">
+                    <span class="err" id="err_entry_date"></span><p class="notic">入职日期</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>集团名称</label>
+                </dt>
+                <dd class="opt">
+                    <select name="ji_id" class="j_01">
+                        <option value="" >请选择</option>
+                        <volist name="jituan" id="item">
+                            <option value="{$item.id}" >{$item.name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_j_id"></span>
+                    <p class="notic">集团名称</p>
+                </dd>
+            </dl>
+                <dl class="row">
+                    <dt class="tit">
+                        <label><em>*</em>园所名称/部门名称</label>
+                    </dt>
+                    <dd class="opt">
+                        <select name="garden_id" class="garden_01">
+                            <option value="" >请选择</option>
+                            <volist name="info" id="item">
+                                <option value="{$item.id}" >{$item.name}</option>
+                            </volist>
+                        </select>
+                        <span class="err" id="err_garden_id"></span>
+                        <p class="notic">园所名称/部门名称</p>
+                    </dd>
+                </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>班级名称</label>
+                </dt>
+                <dd class="opt">
+                    <select name="class_id" class="class_01">
+                        <option value="" >请选择</option>
+                        <volist name="class" id="item">
+                            <option value="{$item.id}" >{$item.name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_class_id"></span>
+                    <p class="notic">班级名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>任岗职位</label>
+                </dt>
+                <dd class="opt">
+                    <select name="o_id" class="post_01">
+                        <option value="" >请选择</option>
+                        <volist name="post" id="item">
+                            <option value="{$item.id}" >{$item.name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_post_id"></span>
+                    <p class="notic">任岗职位</p>
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>薪资类型</label>
+                </dt>
+                <dd class="opt">
+                    <select name="pay_id" class="type_01">
+                        <volist name="data" id="item">
+                            <option value="{$item.pay_id}">{$item.role_name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_type_id"></span>
+                    <p class="notic">薪资类型</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>薪资级别</label>
+                </dt>
+                <dd class="opt">
+                    <select name="pay_rank_id" class="rank_01" >
+                        <volist name="rank" id="item">
+                            <option value="{$item.pay_id}"  >{$item.pay_name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_rank_id"></span>
+                    <p class="notic">薪资级别</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>薪资标准</label>
+                </dt>
+                <dd class="opt">
+                    <select name="pay_standard_id" class="standard_01">
+                        <volist name="standard" id="item">
+                            <option value="{$item.pay_id}">{$item.pay_name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_standard_id"></span>
+                    <p class="notic">薪资标准</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="positive_date"><em>*</em>转正日期</label>
+                </dt>
+                <dd class="opt">
+                    <input type="date" name="positive_date" value="{$info.email}" id="positive_date" class="input-txt" maxlength="40">
+                    <span class="err" id="err_positive_date"></span><p class="notic">转正日期</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="transfer_date"><em>*</em>转岗日期</label>
+                </dt>
+                <dd class="opt">
+                    <input type="date" name="entry_date" value="{$info.email}" id="transfer_date" class="input-txt" maxlength="40">
+                    <span class="err" id="err_transfer_date"></span><p class="notic">转岗日期</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>转正岗位</label>
+                </dt>
+                <dd class="opt">
+                    <select name="positive_post_id">
+                        <volist name="post" id="item">
+                            <option value="{$id}"  >{$item.name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_positive_post_id"></span>
+                    <p class="notic">转正岗位</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="dimission_date"><em>*</em>离职日期</label>
+                </dt>
+                <dd class="opt">
+                    <input type="date" name="dimission_date" value="{$info.email}" id="dimission_date" class="input-txt" maxlength="40">
+                    <span class="err" id="err_dimission_date"></span><p class="notic">离职日期</p>
+                </dd>
+            </dl>
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).on('change','.j_01',function () {
+        var j_id = $(this).val()
+        $.ajax({
+            url:"/index.php/Admin/Staff/AjaxJ",
+            type:"post",
+            data:{j_id:j_id},
+            dataType:'json',
+            success:function (data) {
+                // console.log(data);return false;
+                var tr = "<select name='garden_id' class='garden_01'><option value='' >请选择</option>";
+                $.each(data,function (i,v) {
+                    tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                })
+                tr += "</select>";
+                $(".garden_01").html(tr);
+                $.ajax({
+                    url:"/index.php/Admin/Staff/AjaxP",
+                    data:{id:j_id},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        var tr = "<select name='position_id' class='post_01'><option value='' >请选择</option>";
+                        $.each(data,function (i,v) {
+                            tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                        })
+                        tr += "</select>";
+                        $(".post_01").html(tr);
+                    }
+                })
+                $.ajax({
+                    url:"/index.php/Admin/Staff/a",
+                    data:{j_id:j_id},
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        var tr = '<select name="pay_id" class="type_01"><option value="" >请选择</option>'
+                        $.each(data,function (i,v) {
+                            tr +='<option value="'+v.id+'">'+v.o_name+'</option>';
+                        })
+                            tr += '</select>';
+                        $("type_01").html(tr);
+                    }
+                })
+
+            }
+        })
+    })
+    $(document).on('change','.garden_01',function () {
+        var garden_id = $(this).val()
+        $.ajax({
+            url:"/index.php/Admin/Staff/AjaxGarden",
+            type:"post",
+            data:{garden_id:garden_id},
+            dataType:'json',
+            success:function (data) {
+                // console.log(data);
+               var tr = "<select name='class_id' class='class_01'><option value='' >请选择</option>";
+                $.each(data,function (i,v) {
+                    tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                })
+                tr += "</select>";
+                $(".class_01").html(tr);
+                $.ajax({
+                    url:"/index.php/Admin/Staff/AjaxP",
+                    data:{id:garden_id},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        var tr = "<select name='position_id' class='post_01'><option value='' >请选择</option>";
+                        $.each(data,function (i,v) {
+                            tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                        })
+                        tr += "</select>";
+                        $(".post_01").html(tr);
+                    }
+                })
+
+            }
+        })
+    })
+    $(document).on('change','.class_01',function () {
+        var class_id = $(this).val()
+        $.ajax({
+            url:"/index.php/Admin/Staff/AjaxGarden",
+            type:"post",
+            data:{class_id:class_id},
+            dataType:'json',
+            success:function (data) {
+                $.ajax({
+                    url:"/index.php/Admin/Staff/AjaxP",
+                    data:{id:class_id},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        var tr = "<select name='position_id' class='post_01'><option value='' >请选择</option>";
+                        $.each(data,function (i,v) {
+                            tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                        })
+                        tr += "</select>";
+                        $(".post_01").html(tr);
+                    }
+                })
+
+            }
+        })
+    })
+    $(document).on('change','.type_01',function () {
+        var pay_id = $(this).val()
+        $.ajax({
+            url:"/index.php/Admin/Staff/rank",
+            type:"post",
+            data:{pay_id:pay_id},
+            dataType:'json',
+            success:function (data) {
+                var tr = "<select name='pay_rank_id' class='rank_01' >";
+                $.each(data.rank,function (i,v) {
+                    tr += "<option value='"+v.pay_id+"'  >"+v.pay_name+"</option>"
+                })
+                tr += "</select>";
+                $(".rank_01").html(tr);
+
+                var se = "<select name='pay_standard_id' class='standard_01'>";
+                $.each(data.standard,function (i,v) {
+                    se += "<option value='"+v.pay_id+"'  >"+v.pay_name+"</option>"
+                })
+                se += "</select>";
+//                console.log(se);
+                $(".standard_01").html(se);
+            }
+        })
+    })
+    function adsubmit(){
+        $('.err').show();
+        if($("#staff_name").val() == ""){
+            alert('名称不能为空');
+            return false;
+        }else if($("#staff_tel").val() == ""){
+            alert('手机号不能为空');
+            return false;
+        }
+        if($("#"))
+        $.ajax({
+            async:false,
+            url:'/index.php?m=Admin&c=Staff&a=IndexHandle&t='+Math.random(),
+            data:$('#adminHandle').serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(data){
+                // console.log(data);return false;
+                if(data.status != 1){
+                    layer.msg(data.msg,{icon: 2,time: 2000})
+                    $.each(data.result,function (index,item) {
+                        $('#err_'+index).text(item)
+                    })
+                }else{
+                    layer.msg(data.msg,{icon: 1,time: 1000},function () {
+                        window.location.href = data.url;
+                    })
+                }
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#error').html('<span class="error">网络失败，请刷新页面后重试!</span>');
+            }
+        });
+    }
+</script>
+</body>
+</html>

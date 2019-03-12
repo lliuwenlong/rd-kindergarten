@@ -1,0 +1,340 @@
+<include file="public/layout" />
+	<style>
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			
+			/*设置中间鼠标点击事件*/
+			
+			.ayou_div2 {
+				
+				height: 46px;
+				position: relative;
+			}
+			
+			li {
+				width: 129px;
+				height: 44px;
+				font-size: 16px;
+				text-align: center;
+				line-height: 44px;
+				float: left;
+				cursor: pointer;
+			}
+			/*设置显示li的样式*/
+			h3{
+				width: 120px;
+				float: left;
+				height: 44px;
+				line-height: 44px;
+				font-size: 16px;
+			}
+			.a_11 {
+				background: #9bc248;
+				color: #fff;
+				border-bottom: none;
+			}
+
+		</style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+	<div class="fixed-bar">
+		<div class="item-title">
+			<div class="subject">
+				<h3>园所管理--保教管理--成长档案</h3>
+				
+			</div>
+		</div>
+	</div>
+	
+		<div class="ayou_div1">
+
+			<!--设置选项卡-->
+			<div class="ayou_div2">
+
+				<ul id="a_1">
+					<h3>所属集团：</h3>
+					<li class="a_11 cl" id="0" cat="ji_id">全部</li>
+					<foreach name="where['ji']" item="val">
+						<li id="{$val.id}" cat="ji_id" class="cl">{$val.name}</li>
+					</foreach>
+					
+				</ul>
+		</div>
+		
+
+			<!--设置选项卡-->
+			<div class="ayou_div2">
+
+				<ul id="a_2">
+					<h3>所属园区/部门：</h3>
+					<span id="garden">
+					<li class="a_11 cl" id="0" cat="garden_id">全部</li>
+					
+						<foreach name="where['garden']" item="val">
+							<li id="{$val.id}" cat="garden_id" class="cl">{$val.name}</li>
+						</foreach>
+					</span>
+				</ul>
+		</div>
+		
+
+			<!--设置选项卡-->
+			<div class="ayou_div2">
+
+				<ul id="a_3">
+					<h3>所属班级：</h3>
+					<span id="class">
+					<li class="a_11 cl" id="0" cat="class_id">全部</li>
+					
+						<foreach name="where['class']" item="val">
+						<li id="{$val.id}" cat="class_id" class="cl">{$val.name}</li>
+					</foreach>
+					</span>
+					
+				</ul>
+		</div>
+		
+		</div>
+		<hr>
+		<div class="flexigrid">
+				<div class="tDiv">
+		            <div class="tDiv2">
+		                <div class="fbutton">
+		                    <a href="{:U('Teach/mu_add',['id'=>0])}">
+		                        <div class="add" title="前去采购">
+		                            <span><i class="fa fa-plus"></i>学生档案——模板添加</span>
+		                        </div>
+		                    </a>
+		                  
+		                </div>
+		            </div>
+		        </div>
+		 </div>
+		<hr>
+		<table border="1" style="background-color: red;text-align: center;">
+			
+			<thead>
+				<tr style="background-color: skyblue;">
+					<th>学生ID</th>
+					<th>学生姓名</th>
+					<th>学生头像</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="tbd">
+				<foreach name="list" item="val">
+					
+
+						<tr>
+							<td>{$val.id}</td>
+							<td>{$val.name}</td>
+							<td><img style="width:50px;height:50px;" src="__PUBLIC__/img/{$val.student_img}"  ></td>
+							<td><a href="/index.php?m=Admin&c=Teach&a=recordXQ&id={$val.id}"><button type="button">档案详情</button></a></td>
+							
+							<!-- <td><button type="button" id="{$val.staff_id}">评分</button><button type="button" id="{$val.staff_id}">详情</button></td> -->
+						</tr>
+					
+				</foreach>
+				
+			</tbody>
+		</table>
+		
+
+<script>
+	function zouni(myID) {
+				//设置选项一栏
+				var a_1 = document.getElementById(myID);
+				var a_1lis = a_1.getElementsByTagName('li');
+				//li div数量相等 下标一样 使用遍历
+				for(var i = 0; i < a_1lis.length; i++) {
+					//保存鼠标移入当前li的下标
+					a_1lis[i].index = i;
+					//鼠标点击
+					a_1lis[i].onclick = function() {
+						//去掉指定li样式影藏所有div
+						for(var j = 0; j < a_1lis.length; j++) {
+							a_1lis[j].className = 'cl';
+						}
+						//显示当前li想其对应的div		
+						a_1lis[this.index].className = 'a_11 cl';
+					}
+				}
+			};
+			zouni('a_1');
+			zouni('a_2');
+			zouni('a_3');
+			
+
+	$(document).ready(function(){
+		// 表格行点击选中切换
+		$('#flexigrid > table>tbody >tr').click(function(){
+			$(this).toggleClass('trSelected');
+		});
+
+		// 点击刷新数据
+		$('.fa-refresh').click(function(){
+			location.href = location.href;
+		});
+
+	});
+
+	$(document).on('click',".cl",function(){
+		
+		$(this).addClass("a_11")
+		$(this).siblings().attr("class","cl")
+		var cat = $(this).attr("cat");
+		var id = $(this).attr("id");
+		if(id =='0'){
+			history.go(0)
+		}
+		var obj = $(".a_11");
+		// console.log(obj)
+		var arr=new Array();
+		$(obj).each(function(i,v){
+			var dat={
+				id:v.id,
+				type:$(this).attr("cat")
+			};
+			arr.push(dat)
+		})
+		// console.log(arr);
+		// return;
+
+
+        if(cat=='ji_id'){
+            $("#class").html('<li class="a_11 cl" id="0" cat="class_id">全部</li>');
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getGarden",
+                data:{id:id,cat:cat},
+                dataType:'json',
+                success:function(res){
+                    // console.log(res)
+                    var st ='<li class="a_11 cl" cat="garden_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        st +=`<li id="${val.id}" cat="garden_id" class="cl">${val.name}</li>`
+                    })
+
+                    $("#garden").html(st)
+                }
+            })
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getRole",
+                data:{id:id,cat:cat},
+                dataType:'json',
+                success:function(res){
+                    // console.log(res)
+                    var st ='<li class="a_11 cl" cat="o_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        st +=`<li id="${val.id}" cat="o_id" class="cl">${val.name}</li>`
+                    })
+
+                    $("#ren").html(st)
+                }
+            })
+            $.ajax({
+                url:"/index.php?m=Admin&c=Assess&a=getJiType",
+                data:{id:id,status:status},
+                dataType:'json',
+                success:function(res){
+                    var str ='<li class="a_11 cl" cat="fen_id" id="0">全部</li>';
+                    $.each(res,function(i,val){
+                        str +=`<li id="${val.id}" cat="fen_id" class="cl">${val.name}</li>`
+                    })
+                    $("#fen").html(str)
+                }
+            })
+        }
+		if(cat=='garden_id'){
+			$.ajax({
+				url:"/index.php?m=Admin&c=Assess&a=getClass",
+				data:{id:id,cat:cat},
+				dataType:'json',
+				success:function(res){
+					// console.log(res)
+					var stt ='<li class="a_11 cl" cat="class_id" id="0">全部</li>';
+					$.each(res,function(i,val){
+						stt +=`<li id="${val.id}" cat="class_id" class="cl">${val.name}</li>`
+					})
+
+					$("#class").html(stt)
+				}
+			})
+		}
+
+		if(cat =='o_id'){
+			var tid = $(this).html()
+				$.ajax({
+					url:"/index.php?m=Admin&c=Assess&a=getFenType",
+					data:{tid:tid},
+					type:'post',  
+					dataType:'json',
+					success:function(res){
+						var sttt ='<li class="a_11 cl" cat="fen_id" id="0">全部</li>';
+						$.each(res,function(i,val){
+							sttt +=`<li id="${val.id}" cat="fen_id" class="cl">${val.name}</li>`
+						})
+							$("#fen").html(sttt)
+					}
+				})
+			
+
+		}
+		$.ajax({
+			url:"/index.php?m=Admin&c=Teach&a=getrecordData",
+			data:{"arr":arr},
+			type:'post',  
+			dataType:'json',
+			success:function(res){
+				var str='';
+				$.each(res,function(i,val){
+				    str +=`
+
+						<tr>
+							<td>${val.id}</td>
+							<td>${val.name}</td>
+							<td><img style="width:50px;height:50px;" src="__PUBLIC__/img/${val.student_img}"  ></td>
+							<td><a href="/index.php?m=Admin&c=Teach&a=recordXQ&id=${val.id}"><button type="button">档案详情</button></a></td>
+
+
+						</tr>
+				    `;
+				})
+				$("#tbd").html(str)
+			}
+			
+		})
+	})
+
+
+	function delfun(obj) {
+		// 删除按钮
+		layer.confirm('确认删除？', {
+			btn: ['确定', '取消'] //按钮
+		}, function () {
+			$.ajax({
+				type: 'post',
+				url: $(obj).attr('data-url'),
+				data : {act:'del',admin_id:$(obj).attr('data-id')},
+				dataType: 'json',
+				success: function (data) {
+					if (data.status == 1) {
+						layer.msg(data.msg,{icon: 1,time: 1000},function () {
+							$(obj).parent().parent().parent().remove();
+						})
+					} else {
+						layer.msg(data.msg,{icon: 2,time: 2000})
+					}
+				}
+			})
+		}, function () {
+		});
+	}
+</script>
+</body>
+</html>

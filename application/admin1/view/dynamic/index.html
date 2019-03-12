@@ -1,0 +1,139 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"></a>
+            <div class="subject">
+                <h3>园所动态</h3>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="uploadForm" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="act" id="act" value="{$act}">
+        <input type="hidden" name="admin_id" value="{$info.admin_id}">
+        <input type="hidden" name="auth_code" value="{$Think.config.AUTH_CODE}"/>
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>集团名称</label>
+                </dt>
+                <dd class="opt">
+                    <select name="ji_id" class="j_01">
+                        <option value="" >请选择</option>
+                        <volist name="jituan" id="item">
+                            <option value="{$item.id}" >{$item.name}</option>
+                        </volist>
+                    </select>
+                    <span class="err" id="err_j_id"></span>
+                    <p class="notic">集团名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>园所名称/部门名称</label>
+                </dt>
+                <dd class="opt">
+                    <select name="garden_id" class="garden_01">
+                        <option value="" >请选择</option>
+                    </select>
+                    <span class="err" id="err_garden_id"></span>
+                    <p class="notic">园所名称/部门名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="d_title"><em>*</em>标题</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="d_title" value="{$info.user_name}" id="d_title" maxlength="20" class="input-txt">
+                    <span class="err" id="err_d_title"></span>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="d_desc"><em>*</em>内容</label>
+                </dt>
+                <dd class="opt">
+                    <textarea name="d_desc" id="d_desc" cols="50" rows="50"></textarea>
+                    <!--<input type="text" name="email" value="{$info.email}" id="email" class="input-txt" maxlength="40">-->
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="d_photo"><em>*</em>图片</label>
+                </dt>
+                <dd class="opt">
+                    <input type="file" name="d_photo" maxlength="18" value="{$info.password}" id="d_photo" class="input-txt">
+                </dd>
+
+            </dl>
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).on('change','.j_01',function () {
+        var j_id = $(this).val()
+        if(j_id == ""){
+            var td = "<select name='position_id' class='post_01'><option value='' >请选择</option>";
+            td += "</select>";
+            $(".garden_01").html(td);
+            $(".class_01").html(td);
+            $(".post_01").html(td);
+        }
+        $.ajax({
+            url:"/index.php/Admin/Staff/AjaxJ",
+            type:"post",
+            data:{j_id:j_id},
+            dataType:'json',
+            success:function (data) {
+                // console.log(data);return false;
+                var tr = "<select name='garden_id' class='garden_01'><option value='' >请选择</option>";
+                $.each(data,function (i,v) {
+                    tr += "<option value='"+v.id+"'  >"+v.name+"</option>"
+                })
+                tr += "</select>";
+
+                $(".garden_01").html(tr);
+            }
+        })
+    })
+    // 判断输入框是否为空
+    function adsubmit(){
+        $('.err').show();
+        var formData = new FormData($('#uploadForm')[0]);
+        $.ajax({
+            async:false,
+            cache:false,
+            processData: false,//用于对data参数进行序列化处理 这里必须false
+            contentType: false, //必须
+            url:'/index.php?m=Admin&c=Dynamic&a=DynamicHandle&t='+Math.random(),
+            data: formData,
+            type:'post',
+            dataType:'json',
+
+            success:function(data){
+//                console.log(data);return false;
+                if(data.status != 1){
+                    layer.msg(data.msg,{icon: 2,time: 2000})
+                    $.each(data.result,function (index,item) {
+                        $('#err_'+index).text(item)
+                    })
+                }else{
+                    layer.msg(data.msg,{icon: 1,time: 1000},function () {
+                        window.location.href = data.url;
+                    })
+                }
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#error').html('<span class="error">网络失败，请刷新页面后重试!</span>');
+            }
+        });
+    }
+</script>
+</body>
+</html>

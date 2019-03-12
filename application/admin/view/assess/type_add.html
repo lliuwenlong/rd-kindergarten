@@ -1,0 +1,67 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>考核管理--考核评分--添加考核评分分类</h3>
+                <!--<h5>添加考核评分标准：添加每个职位的考核评分标准详情</h5>-->
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="form1" method="post" action="/index.php?m=Admin&c=Assess&a=type_add">
+        <!-- <input type="hidden" name="id" value="{$id}"> -->
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>评分分类名</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="name"  id="user_name" maxlength="20" class="input-txt">
+                    <span class="err" id="err_user_name"></span>
+                    <p class="notic">评分分类名</p>
+                </dd>
+            </dl>
+
+            <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所属集团</label>
+                </dt>
+                <dd class="opt">
+                    <select name="ji_id" >
+                        <option value='0'>请选择...</option>
+                        <foreach name="ji" item="v">
+                            <option value="{$v.id}">{$v.name}</option>
+                        </foreach>
+                    </select>
+                </dd>
+            </dl>
+
+            <dl class="row" >
+                <dt class="tit">
+                    <label for="user_name"><em>*</em>所属员工分类</label>
+                </dt>
+                <dd class="opt">
+                    <select name="status" >
+                        <option value="0">园长</option>
+                        <option value="1">其他员工</option>
+
+                    </select>
+                </dd>
+            </dl>
+
+
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    function adsubmit(){
+        $("#form1").submit();
+    }
+</script>

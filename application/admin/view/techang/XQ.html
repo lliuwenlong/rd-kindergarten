@@ -1,0 +1,37 @@
+<table border="1" style="background-color:deepskyblue;">
+    <tr>
+        <td>特长课ID</td>
+        <td>{$data['id']}</td>
+    </tr>
+    <tr>
+        <td>特长课名称</td>
+        <td>{$data['name']}</td>
+    </tr>
+    <tr>
+        <td>授课人</td>
+        <td>{$data['ren_name']}</td>
+    </tr>
+    <tr>
+        <td>配课老师</td>
+        <td>{$data['ren_name2']}</td>
+    </tr>
+    <tr>
+        <td>价格</td>
+        <td>{$data['money']}</td>
+    </tr>
+    <tr>
+        <td>结算比例</td>
+        <td>{$data['bili']}</td>
+    </tr>
+    <tr>
+        <td>月课时</td>
+        <td>{$data['class_num']}</td>
+    </tr>
+    <foreach name="$data['ke']" item="val">
+        <tr>
+            <td>{$val.name}</td>
+            <td>{$val.time}</td>
+        </tr>
+    </foreach>
+
+</table>
